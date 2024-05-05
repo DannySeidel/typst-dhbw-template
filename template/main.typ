@@ -1,7 +1,7 @@
 #import "@preview/codelst:2.0.1": sourcecode
 #import "/template/titlepage.typ": *
 #import "/template/confidentiality-statement.typ": *
-#import "/template/independent-work-declaration.typ": *
+#import "/template/declaration-of-authorship.typ": *
 #import "/template/acronyms-list.typ": *
 
 #let dhbw-thesis(
@@ -9,7 +9,7 @@
   authors: (:),
   at-dhbw: false,
   show-confidentiality-statement: true,
-  show-independent-work-declaration: true,
+  show-declaration-of-authorship: true,
   show-table-of-contents: true,
   show-acronyms: true,
   show-list-of-figures: true,
@@ -101,8 +101,8 @@
     confidentiality-statement(authors, title, university, university-location, date)
   }
 
-  if (show-independent-work-declaration) {
-    independent-work-declaration(authors, title, date)
+  if (show-declaration-of-authorship) {
+    declaration-of-authorship(authors, title, date)
   }
 
   show outline.entry.where(

@@ -14,7 +14,7 @@
   ),
   at-dhbw: false, // if true the company name on the title page and the confidentiality statement are hidden
   show-confidentiality-statement: true,
-  show-independent-work-declaration: true,
+  show-declaration-of-authorship: true,
   show-table-of-contents: true,
   show-acronyms: true,
   show-list-of-figures: true,
