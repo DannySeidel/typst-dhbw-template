@@ -16,6 +16,7 @@
   show-list-of-figures: true,
   show-list-of-tables: true,
   show-code-snippets: true,
+  show-bibliography: true,
   show-appendix: false,
   show-abstract: true,
   abstract: "",
@@ -179,7 +180,9 @@
 
   body
 
-  bibliography(style: "institute-of-electrical-and-electronics-engineers", "/sources.bib")
+  if (show-bibliography) {
+    bibliography(style: "institute-of-electrical-and-electronics-engineers", "/sources.bib")
+  }
 
   if (show-appendix) {
     heading(level: 1, numbering: none)[Appendix]
