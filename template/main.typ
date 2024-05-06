@@ -25,8 +25,8 @@
   university-location: "",
   supervisor: "",
   date: datetime.today(),
-  logo-left: "",
-  logo-right: "",
+  logo-left: none,
+  logo-right: none,
   body,
 ) = {
   // set the document's basic properties
@@ -81,11 +81,13 @@
         ),
         stack(dir: ltr,
           spacing: 1em,
-          if logo-left != "" {
-            image(logo-left, height: 1.2cm)
+          if logo-left != none {
+            set image(height: 1.2cm)
+            logo-left
           },
-          if logo-right != "" {
-            image(logo-right, height: 0.8cm)
+          if logo-right != none {
+            set image(height: 0.8cm)
+            logo-right
           }
         )
       )

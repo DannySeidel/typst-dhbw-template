@@ -28,8 +28,8 @@
   university-location: "Ravensburg Campus Friedrichshafen",
   supervisor: "John Appleseed",
   date: datetime.today(),
-  logo-left: "/assets/logos/dhbw.svg",
-  // logo-right: "/assets/logos/company.svg"
+  logo-left: image("assets/logos/dhbw.svg"),
+  // logo-right: image("assets/logos/company.svg")
 ) 
 
 // Edit this content to your liking

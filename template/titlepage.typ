@@ -3,17 +3,17 @@
     spacing: 1fr,
    // Logo at top left if given
     align(horizon,
-      if logo-left != "" {
+      if logo-left != none {
         set image(width: 6cm)
-        image(logo-left)
+        logo-left
       }
     ),
 
     // Logo at top right if given
     align(horizon,
-      if logo-right != "" {
+      if logo-right != none {
         set image(width: 6cm)
-        image(logo-right)
+        logo-right
       }
     )
   )
