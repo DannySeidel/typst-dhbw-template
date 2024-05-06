@@ -20,6 +20,7 @@
   show-list-of-figures: true,
   show-list-of-tables: true,
   show-code-snippets: true,
+  show-appendix: false,
   show-abstract: true,
   abstract: abstract, // displays the abstract defined above
   university: "Cooperative State University Baden-Württemberg",

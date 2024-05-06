@@ -3,6 +3,7 @@
 #import "/template/confidentiality-statement.typ": *
 #import "/template/declaration-of-authorship.typ": *
 #import "/template/acronyms-list.typ": *
+#import "/appendix.typ": *
 
 #let dhbw-thesis(
   title: "",
@@ -15,6 +16,7 @@
   show-list-of-figures: true,
   show-list-of-tables: true,
   show-code-snippets: true,
+  show-appendix: false,
   show-abstract: true,
   abstract: "",
   course-of-studies: "",
@@ -178,5 +180,10 @@
   body
 
   bibliography(style: "institute-of-electrical-and-electronics-engineers", "/sources.bib")
+
+  if (show-appendix) {
+    heading(level: 1, numbering: none)[Appendix]
+    appendix
+  }
   
 }

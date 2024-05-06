@@ -50,6 +50,8 @@ is true
 
 `show-code-snippets`: Whether the code snippets should be shown, default is true
 
+`show-appendix`: Whether the appendix should be shown, default is false
+
 `show-abstract`: Whether the abstract should be shown, default is true
 `abstract`: Content of the abstract
 
