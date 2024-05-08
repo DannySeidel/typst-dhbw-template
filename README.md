@@ -1,4 +1,4 @@
-# DHBW Thesis
+# Supercharged DHBW
 
 Unofficial [Typst](https://typst.app/) template for DHBW students.
 
@@ -21,7 +21,7 @@ This template includes the package [codelst](https://github.com/jneug/typst-code
 A more detailed explanation of the features can be found in the `main.typ` file.
 
 ## Configuration
-This template exports the dhbw-thesis function with the following named arguments:
+This template exports the supercharged-dhbw function with the following named arguments:
 
 `title`: Title of the document
 

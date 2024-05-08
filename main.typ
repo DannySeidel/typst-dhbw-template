@@ -2,7 +2,7 @@
 
 #let abstract = lorem(100)
 
-#show: dhbw-thesis.with(
+#show: supercharged-dhbw.with(
   title: "Exploration of Typst for the Composition of a University Thesis",
   authors: (
     (name: "Juan Pérez", student-id: "1234567", course: "TIM21", course-of-studies: "Mobile Computer Science", company: (
