@@ -1,14 +1,19 @@
-#import "@preview/codelst:2.0.1": sourcecode
-#import "/template/titlepage.typ": *
-#import "/template/confidentiality-statement.typ": *
-#import "/template/declaration-of-authorship.typ": *
-#import "/template/acronyms-list.typ": *
-#import "/appendix.typ": *
+#import "@preview/supercharged-dhbw:1.2.1": *
 
-#let supercharged-dhbw(
-  title: "",
-  authors: (:),
-  at-dhbw: false,
+#let abstract = lorem(100)
+
+#show: supercharged-dhbw.with(
+  title: "Exploration of Typst for the Composition of a University Thesis",
+  authors: (
+    (name: "Juan Pérez", student-id: "1234567", course: "TIM21", course-of-studies: "Mobile Computer Science", company: (
+      (name: "ABC AG", post-code: "08005", city: "Barcelona", country: "Spain")
+    )),
+    (name: "Max Mustermann", student-id: "7654321", course: "TIS21", course-of-studies: "IT-Security", company: (
+      (name: "YXZ GmbH", post-code: "70435", city: "Stuttgart", country: "")
+    )),
+  ),
+  language: "en", // en, de
+  at-dhbw: false, // if true the company name on the title page and the confidentiality statement are hidden
   show-confidentiality-statement: true,
   show-declaration-of-authorship: true,
   show-table-of-contents: true,
@@ -16,179 +21,114 @@
   show-list-of-figures: true,
   show-list-of-tables: true,
   show-code-snippets: true,
-  show-bibliography: true,
   show-appendix: false,
   show-abstract: true,
-  abstract: "",
-  course-of-studies: "",
-  university: "",
-  university-location: "",
-  supervisor: "",
+  show-header: true,
+  numbering-style: "1 of 1", // https://typst.app/docs/reference/model/numbering
+  numbering-alignment: center, // left, center, right
+  abstract: abstract, // displays the abstract defined above
+  university: "Cooperative State University Baden-Württemberg",
+  university-location: "Ravensburg Campus Friedrichshafen",
+  supervisor: "John Appleseed",
   date: datetime.today(),
-  logo-left: none,
-  logo-right: none,
-  body,
-) = {
-  // set the document's basic properties
-  set document(title: title, author: authors.map(author => author.name))
+  bibliography: bibliography("sources.bib"),
+  logo-left: image("assets/logos/dhbw.svg"),
+  // logo-right: image("assets/logos/company.svg"),
+  // logo-size-ratio: "2:1" // ratio between the right logo and the left logo height (left-logo:right-logo) only the right logo is resized
+) 
 
-  // save heading and body font families in variables
-  let body-font = "Open Sans"
-  let heading-font = "Montserrat"
-  
-  // customize look of figure
-  set figure.caption(separator: [ --- ], position: bottom)
+// Edit this content to your liking
 
-  // set body font family
-  set text(font: body-font, lang: "en", 12pt)
-  show heading: set text(font: heading-font)
+= Introduction
 
-  //heading numbering
-  set heading(numbering: (..nums) => {
-    let level = nums.pos().len()
-    // only level 1 and 2 are numbered
-    let pattern = if level == 1 {
-      "1."
-    } else if level == 2 {
-      "1.1."
-    } else if level == 3 {
-      "1.1.1."
-    }
-    if pattern != none {
-      numbering(pattern, ..nums)
-    }
-  })
- 
-  // set link style
-  show link: it => underline(text(it))
-  
-  show heading.where(level: 1): it => {
-    pagebreak()
-    v(2em) + it + v(1em)
-  }
-  show heading.where(level: 2): it => v(1em) + it + v(0.5em)
-  show heading.where(level: 3): it => v(0.5em) + it + v(0.25em)
+#lorem(100)
 
-  titlepage(authors, title, date, at-dhbw, logo-left, logo-right, course-of-studies, university, university-location, supervisor, heading-font)
+#lorem(100)
 
-  set page(
-    margin: (top: 8em, bottom: 8em),
-    header: {
-      stack(dir: ltr,
-        spacing: 1fr,
-        box(width: 180pt,
-        emph(align(center,text(size: 9pt, title))),
-        ),
-        stack(dir: ltr,
-          spacing: 1em,
-          if logo-left != none {
-            set image(height: 1.2cm)
-            logo-left
-          },
-          if logo-right != none {
-            set image(height: 0.8cm)
-            logo-right
-          }
-        )
-      )
-      line(length: 100%)
-    }
-  )
+#lorem(100)
 
-  // set page numbering to roman numbering
-  set page(
-    numbering: "I", 
-    number-align: center, 
-  )
-  counter(page).update(1)
+= Examples
 
-  if (not at-dhbw and show-confidentiality-statement) {
-    confidentiality-statement(authors, title, university, university-location, date)
-  }
+#lorem(30)
 
-  if (show-declaration-of-authorship) {
-    declaration-of-authorship(authors, title, date)
-  }
+== Acronyms
 
-  show outline.entry.where(
-    level: 1,
-  ): it => {
-    v(18pt, weak: true)
-    strong(it)
-  }
+Use the `acro` function to insert acronyms, which looks like this #acro("API").
 
-  context {
-    let elems = query(figure.where(kind: image), here())
-    let count = elems.len()
-    
-    if (show-list-of-figures and count > 0) {
-      outline(
-        title: [#heading(level: 3)[List of Figures]],
-        target: figure.where(kind: image),
-      )
-    }
-  }
+#acro("AWS")
 
-  context {
-    let elems = query(figure.where(kind: table), here())
-    let count = elems.len()
+== Lists
 
-    if (show-list-of-tables) {
-      outline(
-        title: [#heading(level: 3)[List of Tables]],
-        target: figure.where(kind: table),
-      )
-    }
-  }
+Create bullet lists or numbered lists.
 
-  context {
-    let elems = query(figure.where(kind: raw), here())
-    let count = elems.len()
+- These bullet
+- points
+- are colored
 
-    if (show-code-snippets) {
-      outline(
-        title: [#heading(level: 3)[Code Snippets]],
-        target: figure.where(kind: raw),
-      )
-    }
-  }
-  
-  if (show-table-of-contents) {
-    outline(title: "Table of contents", indent: auto, depth: 3)
-  }
-    
-  if (show-acronyms) {
-    acronyms-list()
-  }
++ It also
++ works with
++ numbered lists!
 
-  set par(justify: true)
+== Figures and Tables
 
-  context {
-    let has-content = abstract.len() > 0
-    
-    if (show-abstract and has-content) {
-      align(center + horizon, heading(level: 1, numbering: none)[Abstract])
-      text(abstract)
-    }
-  }
-  
-  
-  // reset page numbering and set to arabic numbering
-  set page(
-    numbering: " 1 of 1", 
-    number-align: center, 
-  )
-  counter(page).update(1)
+Create figures or tables like this:
 
-  body
+=== Figures
 
-  if (show-bibliography) {
-    bibliography(style: "institute-of-electrical-and-electronics-engineers", "/sources.bib")
-  }
+#figure(caption: "Image Example", image(width: 4cm, "assets/images/ts.svg"))
 
-  if (show-appendix) {
-    heading(level: 1, numbering: none)[Appendix]
-    appendix
-  }
-  
-}
+=== Tables
+
+#figure(caption: "Table Example", table(
+  columns: (1fr, auto, auto),
+  inset: 10pt,
+  align: horizon,
+  table.header(
+    [], [*Area*], [*Parameters*],
+  ),
+  text("cylinder.svg"),
+  $ pi h (D^2 - d^2) / 4 $,
+  [
+    $h$: height \
+    $D$: outer radius \
+    $d$: inner radius
+  ],
+  text("tetrahedron.svg"),
+  $ sqrt(2) / 12 a^3 $,
+  [$a$: edge length]
+))<table>
+
+== Code Snippets
+
+Insert code snippets like this:
+
+#figure(caption: "Codeblock Example", sourcecode[```typ
+#show "ArtosFlow": name => box[
+  #box(image(
+    "logo.svg",
+    height: 0.7em,
+  ))
+  #name
+]
+
+This report is embedded in the
+ArtosFlow project. ArtosFlow is a
+project of the Artos Institute.
+```])
+
+== References
+
+Cite like this #cite(form: "prose", <iso18004>).
+Or like this @iso18004.
+
+You can also reference by adding `<ref>` with the desired name after figures or headings.
+
+For example this @table references the table on the previous page.
+
+= Conclusion
+
+#lorem(100)
+
+#lorem(120)
+
+#lorem(80)

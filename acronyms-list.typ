@@ -1,12 +1,16 @@
 // https://github.com/typst/typst/issues/659
-#import "/acronyms.typ": acronyms
+#import "template/acronyms.typ": acronyms
 
 // The state which tracks the used acronyms
 #let usedAcronyms = state("usedDic", (:))
 
-#let acronyms-list() = {
+#let acronyms-list(language) = {
   v(2em)
-  heading(level: 1, numbering: none, "Acronyms")
+  heading(level: 1, numbering: none, if (language == "de") {
+    "Abkürzungsverzeichnis"
+  } else {
+    "List of Acronyms"
+  })
   locate(loc => usedAcronyms.final(loc)
   .pairs()
   .filter(x => x.last())

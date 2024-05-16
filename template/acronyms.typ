@@ -1,6 +1,6 @@
 // Define your acronyms here
 
 #let acronyms = (
-    API: "Application programmable interface",
+    API: "Application Programming Interface",
     AWS: "Amazon Web Services"
 )
