@@ -15,6 +15,7 @@
   show-confidentiality-statement: true,
   show-declaration-of-authorship: true,
   show-table-of-contents: true,
+  toc-depth: 3,
   show-acronyms: true,
   show-list-of-figures: true,
   show-list-of-tables: true,
@@ -190,7 +191,7 @@
       [Inhaltsverzeichnis]
     } else {
       [Table of Contents]
-    }], indent: auto)
+    }], indent: auto, depth: [toc-depth])
   }
     
   if (show-acronyms and acronyms.len() > 0) {
