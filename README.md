@@ -89,9 +89,9 @@ is `true`
 
 `show-header`: Whether the header should be shown, default is `true`
 
-`numbering-style`: Style of the page numbering, default is `1 of 1`
-
 `numbering-alignment`: Alignment of the page numbering, default is `center`
+
+`toc-depth`: Depth of the table of contents, default is `3`
 
 `abstract`: Content of the abstract
 
@@ -118,7 +118,7 @@ is `true`
 If you want to change an existing project to use this template, you can add a show rule like this at the top of your file:
 
 ```typst
-#import "@preview/supercharged-dhbw:1.3.0": *
+#import "@preview/supercharged-dhbw:1.4.0": *
 
 #show: supercharged-dhbw.with(
   title: "Exploration of Typst for the Composition of a University Thesis",
@@ -142,8 +142,8 @@ If you want to change an existing project to use this template, you can add a sh
   show-appendix: false,
   show-abstract: true,
   show-header: true,
-  numbering-style: "1 of 1", // https://typst.app/docs/reference/model/numbering
   numbering-alignment: center, // left, center, right
+  toc-depth: 3, // depth of the table of contents
   abstract: abstract, // displays the abstract defined in the abstract.typ file
   appendix: appendix, // displays the appendix defined in the appendix.typ file
   acronyms: acronyms, // displays the acronyms defined in the acronyms.typ file

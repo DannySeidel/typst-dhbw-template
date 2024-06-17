@@ -1,4 +1,4 @@
-#import "@preview/supercharged-dhbw:1.3.0": *
+#import "@preview/supercharged-dhbw:1.4.0": *
 #import "appendix.typ": appendix
 #import "abstract.typ": abstract
 #import "acronyms.typ": acronyms
@@ -25,8 +25,8 @@
   show-appendix: false,
   show-abstract: true,
   show-header: true,
-  numbering-style: "1 of 1", // https://typst.app/docs/reference/model/numbering
   numbering-alignment: center, // left, center, right
+  toc-depth: 3, // depth of the table of contents
   abstract: abstract, // displays the abstract defined in the abstract.typ file
   appendix: appendix, // displays the appendix defined in the appendix.typ file
   acronyms: acronyms, // displays the acronyms defined in the acronyms.typ file

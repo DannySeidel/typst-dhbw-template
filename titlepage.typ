@@ -1,4 +1,8 @@
-#let titlepage(authors, title, language, date, at-dhbw, logo-left, logo-right, left-logo-height, right-logo-height, university, university-location, supervisor, heading-font) = {
+#let titlepage(authors, title, language, date, at-dhbw, logo-left, logo-right, left-logo-height, right-logo-height, university, university-location, supervisor, heading-font, many-authors) = {
+  if (many-authors) {
+    v(-1em)
+  }
+
   stack(dir: ltr,
     spacing: 1fr,
    // Logo at top left if given
@@ -18,37 +22,75 @@
     )
   )
   
-  v(1.5fr)
+  if (many-authors) {
+    v(1fr)
+  } else {
+    v(1.5fr)
+  }
 
-  align(center, text(weight: "semibold", font: heading-font, 2.2em, title))
-  v(4em)
+  align(center, text(weight: "semibold", font: heading-font, 2em, title))
+
+  if (many-authors) {
+    v(2em)
+  } else {
+    v(4em)
+  }
+
   align(center, text(1.2em, [#if (language == "de") {
     [aus dem Studiengang #authors.map(author => author.course-of-studies).dedup().join(" | ")]
   } else {
     [from the course of studies #authors.map(author => author.course-of-studies).dedup().join(" | ")]
   }]))
-  v(1em)
+
+  if (many-authors) {
+    v(0.75em)
+  } else {
+    v(1em)
+  }
+
   align(center, text(1.2em, [#if (language == "de") {
     [an der #university #university-location]
   } else {
     [at the #university #university-location]
   }]))
-  v(3em)
+
+  if (many-authors) {
+    v(1.5em)
+  } else {
+    v(3em)
+  }
+
   align(center, text(1em, if (language == "de") {
     "von"
   } else {
     "by"
   }))
-  v(2em)
+  
+    if (many-authors) {
+    v(1em)
+  } else {
+    v(2em)
+  }
+
   grid(
     columns: 100%,
     rows: auto,
-    gutter: 18pt,
+    gutter: if (many-authors) {
+      14pt
+    } else {
+      18pt
+    },
     ..authors.map(author => align(center, {
-      text(weight: "medium", 1.5em, [#author.name])
+      text(weight: "medium", 1.25em, [#author.name])
     }))
   )
-  v(2em)
+
+  if (many-authors) {
+    v(1em)
+  } else {
+    v(2em)
+  }
+
   align(center, text(1.2em, date.display(
     "[day].[month].[year]"
   )))
@@ -77,7 +119,7 @@
         }
       ),
       text(weight: "semibold", if (language == "de") {
-        "Beteuer an der DHBW:"
+        "Betreuer an der DHBW:"
       } else {
         "Supervisor at DHBW:"
       }),
@@ -121,7 +163,7 @@
         }
       ),
       text(weight: "semibold", if (language == "de") {
-        "Beteuer im Unternehmen:"
+        "Betreuer im Unternehmen:"
       } else {
         "Supervisor in the Company:"
       }),

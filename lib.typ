@@ -22,8 +22,8 @@
   show-appendix: false,
   show-abstract: true,
   show-header: true,
-  numbering-style: "1 of 1",
   numbering-alignment: center,
+  toc-depth: 3,
   abstract: none,
   appendix: none,
   acronyms: none,
@@ -39,6 +39,8 @@
 ) = {
   // set the document's basic properties
   set document(title: title, author: authors.map(author => author.name))
+  let author-count = authors.len()
+  let many-authors = author-count > 4
 
   init-acronyms(acronyms)
 
@@ -62,20 +64,7 @@
   show heading: set text(weight: "semibold", font: heading-font)
 
   //heading numbering
-  set heading(numbering: (..nums) => {
-    let level = nums.pos().len()
-    // only level 1 and 2 are numbered
-    let pattern = if level == 1 {
-      "1."
-    } else if level == 2 {
-      "1.1."
-    } else if level == 3 {
-      "1.1.1."
-    }
-    if pattern != none {
-      numbering(pattern, ..nums)
-    }
-  })
+  set heading(numbering: "1.")
  
   // set link style
   show link: it => underline(text(it))
@@ -87,17 +76,17 @@
   show heading.where(level: 2): it => v(1em) + it + v(0.5em)
   show heading.where(level: 3): it => v(0.5em) + it + v(0.25em)
 
-  titlepage(authors, title, language, date, at-dhbw, logo-left, logo-right, left-logo-height, right-logo-height, university, university-location, supervisor, heading-font)
+  titlepage(authors, title, language, date, at-dhbw, logo-left, logo-right, left-logo-height, right-logo-height, university, university-location, supervisor, heading-font, many-authors)
 
   set page(
     margin: (top: 8em, bottom: 8em),
     header: {
       if (show-header) {
-        stack(dir: ltr,
-          spacing: 1fr,
-          box(width: 180pt,
-          emph(align(center,text(size: 9pt, title))),
-          ),
+        grid(
+          columns: (1fr, auto),
+          align: (left, right),
+          gutter: 2em,
+          emph(align(center + horizon,text(size: 10pt, title))),
           stack(dir: ltr,
             spacing: 1em,
             if logo-left != none {
@@ -110,6 +99,7 @@
             }
           )
         )
+        v(-0.75em)
         line(length: 100%)
       }
     }
@@ -123,11 +113,11 @@
   counter(page).update(1)
 
   if (not at-dhbw and show-confidentiality-statement) {
-    confidentiality-statement(authors, title, university, university-location, date, language)
+    confidentiality-statement(authors, title, university, university-location, date, language, many-authors)
   }
 
   if (show-declaration-of-authorship) {
-    declaration-of-authorship(authors, title, date, language)
+    declaration-of-authorship(authors, title, date, language, many-authors)
   }
 
   show outline.entry.where(
@@ -157,7 +147,7 @@
     let elems = query(figure.where(kind: table), here())
     let count = elems.len()
 
-    if (show-list-of-tables) {
+    if (show-list-of-tables and count > 0) {
       outline(
         title: [#heading(level: 3)[#if (language == "de") {
           [Tabellenverzeichnis]
@@ -173,7 +163,7 @@
     let elems = query(figure.where(kind: raw), here())
     let count = elems.len()
 
-    if (show-code-snippets) {
+    if (show-code-snippets and count > 0) {
       outline(
         title: [#heading(level: 3)[#if (language == "de") {
           [Codeverzeichnis]
@@ -190,7 +180,7 @@
       [Inhaltsverzeichnis]
     } else {
       [Table of Contents]
-    }], indent: auto)
+    }], indent: auto, depth: toc-depth)
   }
     
   if (show-acronyms and acronyms.len() > 0) {
@@ -225,7 +215,8 @@
     })
   }
 
-  set par(justify: true)
+  set par(justify: true, leading: 1em)
+  set block(spacing: 2em)
 
   if (show-abstract and abstract != none) {
     align(center + horizon, heading(level: 1, numbering: none)[Abstract])
@@ -235,12 +226,27 @@
   
   // reset page numbering and set to arabic numbering
   set page(
-    numbering: numbering-style,
-    number-align: numbering-alignment, 
+    numbering: "1",
+    footer: context align(numbering-alignment, numbering(
+    "1 / 1", 
+    ..counter(page).get(),
+    ..counter(page).at(<end>),
+    ))
   )
   counter(page).update(1)
 
   body
+
+  [#metadata(none)<end>]
+  // reset page numbering and set to alphabetic numbering
+  set page(
+    numbering: "a",
+    footer: context align(numbering-alignment, numbering(
+      "a", 
+      ..counter(page).get(),
+    ))
+  )
+  counter(page).update(1)
 
   // Display bibliography.
   if bibliography != none {
