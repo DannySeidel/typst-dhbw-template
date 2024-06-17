@@ -82,70 +82,54 @@
   v(1fr)
 
   // Author information
-  if (at-dhbw) {
-    grid(
-      columns: (if (language == "de") {
-        200pt
-      } else {
-        180pt
-      }, auto),
-      gutter: 11pt,
-      text(weight: "semibold", if (language == "de") {
-        [Zeitraum:]
-      } else {
-        [Time of project:]
-      }),
-      text(timeOfProject),
-      text(weight: "semibold", if (language == "de") {
-        [Matrikelnummer, Kurs:]
-      } else {
-        [Student ID, Course:]
-      }),
-      stack(
-        dir: ttb,
-        for author in authors {
-          text([#author.student-id, #author.course])
-          linebreak()
-        }
-      ),
+
+  grid(
+    columns: (if (language == "de") {
+      200pt
+    } else {
+      180pt
+    }, auto),
+    gutter: 11pt,
+    text(weight: "semibold", if (language == "de") {
+      [Zeitraum:]
+    } else {
+      [Time of project:]
+    }),
+    text(timeOfProject),
+    text(weight: "semibold", if (language == "de") {
+      [Matrikelnummer, Kurs:]
+    } else {
+      [Student ID, Course:]
+    }),
+    stack(
+      dir: ttb,
+      for author in authors {
+        text([#author.student-id, #author.course])
+        linebreak()
+      }
+    ),
+
+    //  SUPERVISOR IN DHBW
+    [#if (at-dhbw) {
       text(weight: "semibold", if (language == "de") {
         "Betreuer an der DHBW:"
       } else {
         "Supervisor at DHBW:"
-      }),
-      text[#supervisor]
-    )
-  } else {
-    grid(
-      columns: (if (language == "de") {
-        200pt
-      } else {
-        180pt
-      }, auto),
-      gutter: 11pt,
-      text(weight: "semibold", if (language == "de") {
-        [Zeitraum:]
-      } else {
-        [Time of project:]
-      }),
-      text(timeOfProject),
-      text(weight: "semibold", if (language == "de") {
-        [Matrikelnummer, Kurs:]
-      } else {
-        [Student ID, Course:]
-      }),
-      stack(
-        dir: ttb,
-        for author in authors {
-          text([#author.student-id, #author.course])
-          linebreak()
-        }
-      ),
+    })}],
+    [#if (at-dhbw) {
+        text[#supervisor]
+    }],   
+        
+    //  NAME OF COMPANY
+    [#if not (at-dhbw) {
       text(weight: "semibold", if (language == "de") {
         "Unternehmen:"
       } else {
         "Company:"
-      }),
+      })}],
+
+    //  COMPANY ADRESS
+    [#if not (at-dhbw) {
       stack(
         dir: ttb,
         for author in authors {
@@ -157,13 +141,18 @@
           company-address
           linebreak()
         }
-      ),
+      )}],
+
+    //  SUPERVISOR IN COMPANY
+    [#if not (at-dhbw) {
       text(weight: "semibold", if (language == "de") {
         "Betreuer im Unternehmen:"
       } else {
         "Supervisor in the Company:"
-      }),
+    })}],
+
+    [#if not (at-dhbw) {
       text[#supervisor]
-    )
-  }
+    }]
+  )
 }
