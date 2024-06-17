@@ -9,6 +9,9 @@
 
 #let supercharged-dhbw(
   title: "",
+  typeOfThesis: "",
+  typeOfDegree: "",
+  timeOfProject: "",
   authors: (:),
   language: "en",
   at-dhbw: false,
@@ -87,7 +90,7 @@
   show heading.where(level: 2): it => v(1em) + it + v(0.5em)
   show heading.where(level: 3): it => v(0.5em) + it + v(0.25em)
 
-  titlepage(authors, title, language, date, at-dhbw, logo-left, logo-right, left-logo-height, right-logo-height, university, university-location, supervisor, heading-font)
+  titlepage(authors, title, language, typeOfThesis, typeOfDegree, timeOfProject, date, at-dhbw, logo-left, logo-right, left-logo-height, right-logo-height, university, university-location, supervisor, heading-font)
 
   set page(
     margin: (top: 8em, bottom: 8em),

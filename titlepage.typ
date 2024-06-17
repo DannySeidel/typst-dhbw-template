@@ -1,4 +1,4 @@
-#let titlepage(authors, title, language, date, at-dhbw, logo-left, logo-right, left-logo-height, right-logo-height, university, university-location, supervisor, heading-font) = {
+#let titlepage(authors, title, language, typeOfThesis, typeOfDegree, timeOfProject, date, at-dhbw, logo-left, logo-right, left-logo-height, right-logo-height, university, university-location, supervisor, heading-font) = {
   stack(dir: ltr,
     spacing: 1fr,
    // Logo at top left if given
@@ -18,28 +18,55 @@
     )
   )
   
-  v(1.5fr)
+  v(1.2fr)
 
+  //  TITLE
   align(center, text(weight: "semibold", font: heading-font, 2.2em, title))
-  v(4em)
+  v(2em)
+
+  //  TYPE OF THESIS
+  [#if (typeOfThesis != none and typeOfThesis.len() > 0) {
+  align(center, text(weight: "semibold", font: heading-font, 1.4em, typeOfThesis))
+  v(2em)
+  }]
+
+  //  TYPE OF DEGREE
+  [#if (typeOfDegree != none and typeOfDegree.len() > 0) {
+    align(center, text(1em, [#if (language == "de") {
+      [für den Erwerb des]
+    } else {
+      [for the]
+    }]))
+    v(0.3em)
+    align(center, text(weight: "semibold", font: heading-font, 1.4em, typeOfDegree))
+    v(2em)
+  }]
+
+
+  //  COURSE OF STUDIES
   align(center, text(1.2em, [#if (language == "de") {
     [aus dem Studiengang #authors.map(author => author.course-of-studies).dedup().join(" | ")]
   } else {
     [from the course of studies #authors.map(author => author.course-of-studies).dedup().join(" | ")]
   }]))
   v(1em)
+
+  //  UNIVERSITY
   align(center, text(1.2em, [#if (language == "de") {
     [an der #university #university-location]
   } else {
     [at the #university #university-location]
   }]))
-  v(3em)
+  v(2em)
+
+  // AUTHOR
   align(center, text(1em, if (language == "de") {
     "von"
   } else {
     "by"
   }))
-  v(2em)
+  v(0.3em)
+
   grid(
     columns: 100%,
     rows: auto,
@@ -48,14 +75,13 @@
       text(weight: "medium", 1.5em, [#author.name])
     }))
   )
-  v(2em)
+  v(1.5em)
   align(center, text(1.2em, date.display(
     "[day].[month].[year]"
   )))
-
   v(1fr)
 
-  // Author information.
+  // Author information
   if (at-dhbw) {
     grid(
       columns: (if (language == "de") {
@@ -65,7 +91,13 @@
       }, auto),
       gutter: 11pt,
       text(weight: "semibold", if (language == "de") {
-        [Matrikelnummer, Studiengang:]
+        [Zeitraum:]
+      } else {
+        [Time of project:]
+      }),
+      text(timeOfProject),
+      text(weight: "semibold", if (language == "de") {
+        [Matrikelnummer, Kurs:]
       } else {
         [Student ID, Course:]
       }),
@@ -77,7 +109,7 @@
         }
       ),
       text(weight: "semibold", if (language == "de") {
-        "Beteuer an der DHBW:"
+        "Betreuer an der DHBW:"
       } else {
         "Supervisor at DHBW:"
       }),
@@ -92,7 +124,13 @@
       }, auto),
       gutter: 11pt,
       text(weight: "semibold", if (language == "de") {
-        [Matrikelnummer, Studiengang:]
+        [Zeitraum:]
+      } else {
+        [Time of project:]
+      }),
+      text(timeOfProject),
+      text(weight: "semibold", if (language == "de") {
+        [Matrikelnummer, Kurs:]
       } else {
         [Student ID, Course:]
       }),
@@ -121,7 +159,7 @@
         }
       ),
       text(weight: "semibold", if (language == "de") {
-        "Beteuer im Unternehmen:"
+        "Betreuer im Unternehmen:"
       } else {
         "Supervisor in the Company:"
       }),

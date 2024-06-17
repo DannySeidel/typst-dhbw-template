@@ -5,6 +5,9 @@
 
 #show: supercharged-dhbw.with(
   title: "Exploration of Typst for the Composition of a University Thesis",
+  typeOfThesis: "",
+  typeOfDegree: none,
+  timeOfProject: "1/1/1970 - 12/31/9999",
   authors: (
     (name: "Juan Pérez", student-id: "1234567", course: "TIM21", course-of-studies: "Mobile Computer Science", company: (
       (name: "ABC AG", post-code: "08005", city: "Barcelona", country: "Spain")
@@ -62,7 +65,7 @@ Use the `acr` function to insert acronyms, which looks like this #acr("API").
 
 == Lists
 
-Create bullet lists or numbered lists.
+Csreate bullet lists or numbered lists.
 
 - These bullet
 - points
