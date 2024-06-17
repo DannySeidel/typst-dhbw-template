@@ -76,9 +76,13 @@
     }))
   )
   v(1.5em)
-  align(center, text(1.2em, date.display(
-    "[day].[month].[year]"
-  )))
+
+  //  DATE
+  align(center, text(1.2em, [#if (language == "de") {
+    date.display("[day].[month].[year]") 
+  } else {
+    date.display("[month]/[day]/[year]")
+  }]))
   v(1fr)
 
   // Author information
