@@ -56,6 +56,12 @@ This template exports the `supercharged-dhbw` function with the following named 
 
 `title`: Title of the document
 
+`typeOfThesis` (optional*): The type of thesis (i.e. Project work, seminar paper, etc.).
+
+`typeOfDegree` (optional*): The degree that is pursued (i.e. Bachelor of Science, Master of Engineering, etc.).
+
+`timeOfProject`: The timeframe, in which the thesis was developed.
+
 `authors`: List of authors with the following named arguments (example below):
     
     - name: Name of the author
@@ -114,6 +120,8 @@ is `true`
 `logo-right`: Path to the logo on the right side of the title page
 
 `logo-size-ratio`: Ratio between the right logo and the left logo height (left-logo:right-logo), default is `1:1`
+
+(*) Optional parameters can be left out by giving an empty String (`""`) or `none`. The sheet format correspondingly.
 
 If you want to change an existing project to use this template, you can add a show rule like this at the top of your file:
 
