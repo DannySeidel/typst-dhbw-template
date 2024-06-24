@@ -1,17 +1,20 @@
 #import "@preview/codelst:2.0.1": *
-#import "@preview/acrostiche:0.3.1": *
+#import "acronym-lib.typ": init-acronyms, print-acronyms, acr, acrpl, acrs, acrspl, acrl, acrlpl, acrf, acrfpl
 #import "titlepage.typ": *
 #import "confidentiality-statement.typ": *
 #import "declaration-of-authorship.typ": *
+#import "check-attributes.typ": *
 
 // Workaround for the lack of an `std` scope.
 #let std-bibliography = bibliography
 
 #let supercharged-dhbw(
-  title: "",
-  authors: (:),
-  language: "en",
-  at-dhbw: false,
+  title: none,
+  authors: (),
+  language: none,
+  at-dhbw: none,
+  type-of-thesis: none,
+  type-of-degree: none,
   show-confidentiality-statement: true,
   show-declaration-of-authorship: true,
   show-table-of-contents: true,
@@ -24,23 +27,58 @@
   show-header: true,
   numbering-alignment: center,
   toc-depth: 3,
+  acronym-spacing: 5em,
   abstract: none,
   appendix: none,
   acronyms: none,
-  university: "",
-  university-location: "",
-  supervisor: "",
-  date: datetime.today(),
+  university: none,
+  university-location: none,
+  supervisor: none,
+  date: none,
+  date-format: "[day].[month].[year]",
   bibliography: none,
-  logo-left: none,
+  logo-left: image("dhbw.svg"),
   logo-right: none,
   logo-size-ratio: "1:1",
   body,
 ) = {
+  // check required attributes
+  check-attributes(
+    title,
+    authors,
+    language,
+    at-dhbw,
+    type-of-thesis,
+    type-of-degree,
+    show-confidentiality-statement,
+    show-declaration-of-authorship,
+    show-table-of-contents,
+    show-acronyms,
+    show-list-of-figures,
+    show-list-of-tables,
+    show-code-snippets,
+    show-appendix,
+    show-abstract,
+    show-header,
+    numbering-alignment,
+    toc-depth,
+    acronym-spacing,
+    abstract,
+    appendix,
+    acronyms,
+    university,
+    university-location,
+    supervisor,
+    date,
+    bibliography,
+    logo-left,
+    logo-right,
+    logo-size-ratio,
+  )
+
   // set the document's basic properties
   set document(title: title, author: authors.map(author => author.name))
-  let author-count = authors.len()
-  let many-authors = author-count > 4
+  let many-authors = authors.len() > 3
 
   init-acronyms(acronyms)
 
@@ -66,8 +104,14 @@
   //heading numbering
   set heading(numbering: "1.")
  
-  // set link style
-  show link: it => underline(text(it))
+  // set link style for links that are not acronyms
+  show link: it => if (
+    str(it.dest) not in (acronyms.keys().map(acr => ("acronym-" + acr)))
+  ) {
+    text(fill: blue, it)
+  } else {
+    it
+  }
   
   show heading.where(level: 1): it => {
     pagebreak()
@@ -76,7 +120,25 @@
   show heading.where(level: 2): it => v(1em) + it + v(0.5em)
   show heading.where(level: 3): it => v(0.5em) + it + v(0.25em)
 
-  titlepage(authors, title, language, date, at-dhbw, logo-left, logo-right, left-logo-height, right-logo-height, university, university-location, supervisor, heading-font, many-authors)
+  titlepage(
+    authors,
+    date,
+    heading-font,
+    language,
+    left-logo-height,
+    logo-left,
+    logo-right,
+    many-authors,
+    right-logo-height,
+    supervisor,
+    title,
+    type-of-degree,
+    type-of-thesis,
+    university,
+    university-location,
+    at-dhbw,
+    date-format,
+  )
 
   set page(
     margin: (top: 8em, bottom: 8em),
@@ -113,11 +175,11 @@
   counter(page).update(1)
 
   if (not at-dhbw and show-confidentiality-statement) {
-    confidentiality-statement(authors, title, university, university-location, date, language, many-authors)
+    confidentiality-statement(authors, title, university, university-location, date, language, many-authors, date-format)
   }
 
   if (show-declaration-of-authorship) {
-    declaration-of-authorship(authors, title, date, language, many-authors)
+    declaration-of-authorship(authors, title, date, language, many-authors, date-format)
   }
 
   show outline.entry.where(
@@ -183,36 +245,8 @@
     }], indent: auto, depth: toc-depth)
   }
     
-  if (show-acronyms and acronyms.len() > 0) {
-    heading(level: 1, outlined: false, numbering: none)[#if (language == "de") {
-      [Abkürzungsverzeichnis]
-    } else {
-      [List of Acronyms]
-    }]
-
-    state("acronyms", none).display(acronyms => {
-
-      // Build acronym list
-      let acr-list = acronyms.keys()
-
-      // order list
-      acr-list = acr-list.sorted()
-
-      // print the acronyms
-      for acr in acr-list{
-        let acr-long = acronyms.at(acr)
-        let acr-long = if type(acr-long) == array {
-          acr-long.at(0)
-        } else {
-          acr-long
-        }
-        grid(
-          columns: (0.8fr, 1.2fr),
-          gutter: 1em,
-          [*#acr*], [#acr-long\ ]
-        )
-      }
-    })
+  if (show-acronyms and acronyms != none and acronyms.len() > 0) {
+    print-acronyms(language, acronym-spacing)
   }
 
   set par(justify: true, leading: 1em)
