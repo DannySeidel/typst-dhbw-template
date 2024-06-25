@@ -64,6 +64,8 @@ This template exports the `supercharged-dhbw` function with the following named 
 
 `bibliography (content)`: Path to the bibliography file
 
+`bibliography-style (string)`: Bibliography style to use. See [Typst documentation](https://typst.app/docs/reference/model/bibliography/#parameters-style). Default is `ieee`
+
 `date (datetime* | array*)`: Provide a datetime object to display one date (e.g. submission date) or a array containing two datetime objects to display a date range (e.g. start and end date of the project), default is `datetime.today()`
 
 `date-format (str)`: Format of the displayed dates, default is `"[day].[month].[year]"` (for more information on possible formats check the [Typst documentation](https://typst.app/docs/reference/foundations/datetime/#format))

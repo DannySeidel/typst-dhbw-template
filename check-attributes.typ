@@ -26,6 +26,7 @@
     supervisor,
     date,
     bibliography,
+    bibliography-style,
     logo-left,
     logo-right,
     logo-size-ratio,
@@ -58,6 +59,7 @@
     university: university,
     university-location: university-location,
     supervisor: supervisor,
+    bibliography-style: bibliography-style
   )
 
   for (key, attribute) in string-attributes {
