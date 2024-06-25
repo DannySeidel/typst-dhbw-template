@@ -37,6 +37,7 @@
   date: none,
   date-format: "[day].[month].[year]",
   bibliography: none,
+  bibliography-style: "ieee",
   logo-left: image("dhbw.svg"),
   logo-right: none,
   logo-size-ratio: "1:1",
@@ -71,6 +72,7 @@
     supervisor,
     date,
     bibliography,
+    bibliography-style,
     logo-left,
     logo-right,
     logo-size-ratio,
@@ -288,7 +290,7 @@
       [Literatur]
     } else {
       [References]
-    }], style: "ieee")
+    }], style: bibliography-style)
     bibliography
   }
 
