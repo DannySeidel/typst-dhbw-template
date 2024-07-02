@@ -46,7 +46,7 @@ This template exports the `supercharged-dhbw` function with the following named 
     - student-id (str*): Student ID of the author
     - course (str*): Course of the author
     - course-of-studies (str*): Course of studies of the author
-    - company (dictionary): Company of the author
+    - company (dictionary): Company of the author (only needed when `at-university` is `false`) with the following named arguments:
         - name (str*): Name of the company
         - post-code (str): Post code of the company
         - city (str*): City of the company
@@ -60,9 +60,15 @@ This template exports the `supercharged-dhbw` function with the following named 
 
 `appendix (content)`: Content of the appendix, it is recommended that you pass a variable containing the content or a function that returns the content
 
-`at-dhbw* (bool)`: Whether the document is written at the DHBW or not, default is `false`
+`at-university* (bool)`: Whether the document is written at the DHBW or not, default is `false`
 
 `bibliography (content)`: Path to the bibliography file
+
+`bib-style (str)`: Style of the bibliography, default is `ieee`
+
+`city (str)`: City of the author (only needed when `at-university` is `true`)
+
+`confidentiality-statement-content (content)`: Provide a custom confidentiality statement
 
 `date (datetime* | array*)`: Provide a datetime object to display one date (e.g. submission date) or a array containing two datetime objects to display a date range (e.g. start and end date of the project), default is `datetime.today()`
 
@@ -98,7 +104,7 @@ This template exports the `supercharged-dhbw` function with the following named 
 
 `show-table-of-contents (bool)`: Whether the table of contents should be shown, default is `true`
 
-`supervisor (str*)`: Name of the supervisor at the university or company
+`supervisor (dict*)`: Name of the supervisor at the university and/or company (e.g. supervisor: (company: "John Doe", university: "Jane Doe"))
 
 `toc-depth (int)`: Depth of the table of contents, default is `3`
 
@@ -161,7 +167,7 @@ To define the plural form of an acronym use a array as value with the first elem
 If you want to change an existing project to use this template, you can add a show rule like this at the top of your file:
 
 ```typst
-#import "@preview/supercharged-dhbw:1.5.0": *
+#import "@preview/supercharged-dhbw:1.6.0": *
 
 #show: supercharged-dhbw.with(
   title: "Exploration of Typst for the Composition of a University Thesis",
@@ -174,7 +180,7 @@ If you want to change an existing project to use this template, you can add a sh
     )),
   ),
   acronyms: acronyms, // displays the acronyms defined in the acronyms dictionary
-  at-dhbw: false, // if true the company name on the title page and the confidentiality statement are hidden
+  at-university: false, // if true the company name on the title page and the confidentiality statement are hidden
   bibliography: bibliography("sources.bib"),
   date: datetime.today(),
   language: "en", // en, de

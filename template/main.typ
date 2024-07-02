@@ -1,4 +1,4 @@
-#import "@preview/supercharged-dhbw:1.5.0": *
+#import "@preview/supercharged-dhbw:1.6.0": *
 #import "acronyms.typ": acronyms
 
 #show: supercharged-dhbw.with(
@@ -12,11 +12,11 @@
     )),
   ),
   acronyms: acronyms, // displays the acronyms defined in the acronyms dictionary
-  at-dhbw: false, // if true the company name on the title page and the confidentiality statement are hidden
+  at-university: false, // if true the company name on the title page and the confidentiality statement are hidden
   bibliography: bibliography("sources.bib"),
   date: datetime.today(),
   language: "en", // en, de
-  supervisor: "John Appleseed",
+  supervisor: (company: "John Appleseed"),
   university: "Cooperative State University Baden-Württemberg",
   university-location: "Ravensburg Campus Friedrichshafen",
   // for more options check the package documentation (https://typst.app/universe/package/supercharged-dhbw)

@@ -12,7 +12,7 @@
   title: none,
   authors: (),
   language: none,
-  at-dhbw: none,
+  at-university: none,
   type-of-thesis: none,
   type-of-degree: none,
   show-confidentiality-statement: true,
@@ -31,12 +31,15 @@
   abstract: none,
   appendix: none,
   acronyms: none,
+  confidentiality-statement-content: none,
   university: none,
   university-location: none,
-  supervisor: none,
+  city: none,
+  supervisor: (:),
   date: none,
   date-format: "[day].[month].[year]",
   bibliography: none,
+  bib-style: "ieee",
   logo-left: image("dhbw.svg"),
   logo-right: none,
   logo-size-ratio: "1:1",
@@ -47,7 +50,7 @@
     title,
     authors,
     language,
-    at-dhbw,
+    at-university,
     type-of-thesis,
     type-of-degree,
     show-confidentiality-statement,
@@ -70,7 +73,9 @@
     university-location,
     supervisor,
     date,
+    city,
     bibliography,
+    bib-style,
     logo-left,
     logo-right,
     logo-size-ratio,
@@ -136,7 +141,7 @@
     type-of-thesis,
     university,
     university-location,
-    at-dhbw,
+    at-university,
     date-format,
   )
 
@@ -174,12 +179,31 @@
   )
   counter(page).update(1)
 
-  if (not at-dhbw and show-confidentiality-statement) {
-    confidentiality-statement(authors, title, university, university-location, date, language, many-authors, date-format)
+  if (not at-university and show-confidentiality-statement) {
+    confidentiality-statement(
+      authors,
+      title,
+      confidentiality-statement-content,
+      university,
+      university-location,
+      date,
+      language,
+      many-authors,
+      date-format
+    )
   }
 
   if (show-declaration-of-authorship) {
-    declaration-of-authorship(authors, title, date, language, many-authors, date-format)
+    declaration-of-authorship(
+      authors,
+      title,
+      date,
+      language,
+      many-authors,
+      at-university,
+      city,
+      date-format
+    )
   }
 
   show outline.entry.where(
@@ -288,7 +312,7 @@
       [Literatur]
     } else {
       [References]
-    }], style: "ieee")
+    }], style: bib-style)
     bibliography
   }
 
