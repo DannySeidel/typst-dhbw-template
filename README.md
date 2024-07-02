@@ -4,6 +4,10 @@ Unofficial [Typst](https://typst.app/) template for DHBW students.
 
 You can see an example PDF [here](https://github.com/DannySeidel/typst-dhbw-template/blob/main/example.pdf).
 
+## Contributing
+
+If you want to contribute to this template, please open a issue describing the problem or the feature you want to add. If you create a pull request I still have to create a new PR with the changes in the Typst repository, so it is better to open an issue first.
+
 ## Usage
 
 You can use this template in the Typst web app by clicking "Start from template" on the dashboard and searching for `supercharged-dhbw`.
