@@ -16,6 +16,8 @@
   university-location,
   at-university,
   date-format,
+  show-confidentiality-statement,
+  show-confidentiality-marker,
 ) = {
   if (many-authors) {
     v(-1.5em)
@@ -62,6 +64,21 @@
   if (type-of-thesis != none and type-of-thesis.len() > 0) {
     align(center, text(weight: "semibold", 1.25em, type-of-thesis))
     v(0.5em)
+  }
+
+
+  // confidentiality stamp (optional)
+  if (show-confidentiality-marker.at("display")) {
+    v(2em)
+    let color = if (show-confidentiality-statement) {
+      red
+    } else {
+      green.darken(5%)
+    }
+
+    place(right, dx: 35pt +show-confidentiality-marker.at("offset_x") , dy: -80pt + show-confidentiality-marker.at("offset_y"),)[
+      #circle(radius: 3.5em, fill: color)
+    ]
   }
 
   // type of degree (optional)

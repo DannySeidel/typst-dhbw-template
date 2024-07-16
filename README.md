@@ -98,6 +98,8 @@ This template exports the `supercharged-dhbw` function with the following named 
 
 `show-confidentiality-statement (bool)`: Whether the confidentiality statement should be shown, default is `true`
 
+`show-confidentiality-marker: (display: bool, offset_x: int, offset_y: int)`: Configure the confidentially marker on the title page (red or green circle).
+
 `show-declaration-of-authorship (bool)`: Whether the declaration of authorship should be shown, default is `true`
 
 `show-header (bool)`: Whether the header should be shown, default is `true`
