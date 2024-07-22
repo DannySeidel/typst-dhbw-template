@@ -16,6 +16,8 @@
   university-location,
   at-university,
   date-format,
+  show-confidentiality-statement,
+  confidentiality-marker,
 ) = {
   if (many-authors) {
     v(-1.5em)
@@ -56,6 +58,51 @@
     v(0.5em)
   } else {
     v(1.5em)
+  }
+
+  // confidentiality marker (optional)
+  if (confidentiality-marker.display) {
+    let display = false
+    let x-offset = 0pt
+    let y-offset = 0pt
+    let size = 7em
+    let title-spacing = 2em
+
+    if (type-of-degree == none and type-of-thesis == none) {
+      title-spacing = 0em
+    }
+
+    if ("display" in confidentiality-marker) {
+      display = confidentiality-marker.display
+    }
+    if ("offset-x" in confidentiality-marker) {
+      x-offset = confidentiality-marker.offset-x
+    }
+    if ("offset-y" in confidentiality-marker) {
+      y-offset = confidentiality-marker.offset-y
+    }
+    if ("size" in confidentiality-marker) {
+      size = confidentiality-marker.size
+    }
+    if ("title-spacing" in confidentiality-marker) {
+      confidentiality-marker.title-spacing
+    }
+
+    v(title-spacing)
+
+    let color = if (show-confidentiality-statement) {
+      red
+    } else {
+      green.darken(5%)
+    }
+
+    place(
+      right,
+      dx: 35pt + x-offset,
+      dy: -70pt + y-offset,
+    )[
+      #circle(radius: size / 2, fill: color)
+    ]
   }
 
   // type of thesis (optional)

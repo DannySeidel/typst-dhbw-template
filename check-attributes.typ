@@ -1,36 +1,41 @@
 #let check-attributes(
-    title,
-    authors,
-    language,
-    at-university,
-    type-of-thesis,
-    type-of-degree,
-    show-confidentiality-statement,
-    show-declaration-of-authorship,
-    show-table-of-contents,
-    show-acronyms,
-    show-list-of-figures,
-    show-list-of-tables,
-    show-code-snippets,
-    show-appendix,
-    show-abstract,
-    show-header,
-    numbering-alignment,
-    toc-depth,
-    acronym-spacing,
-    abstract,
-    appendix,
-    acronyms,
-    university,
-    university-location,
-    supervisor,
-    date,
-    city,
-    bibliography,
-    bib-style,
-    logo-left,
-    logo-right,
-    logo-size-ratio,
+  title,
+  authors,
+  language,
+  at-university,
+  confidentiality-marker,
+  type-of-thesis,
+  type-of-degree,
+  show-confidentiality-statement,
+  show-declaration-of-authorship,
+  show-table-of-contents,
+  show-acronyms,
+  show-list-of-figures,
+  show-list-of-tables,
+  show-code-snippets,
+  show-appendix,
+  show-abstract,
+  show-header,
+  show-title-in-header,
+  show-left-logo-in-header,
+  show-right-logo-in-header,
+  show-header-divider,
+  numbering-alignment,
+  toc-depth,
+  acronym-spacing,
+  abstract,
+  appendix,
+  acronyms,
+  university,
+  university-location,
+  supervisor,
+  date,
+  city,
+  bibliography,
+  bib-style,
+  logo-left,
+  logo-right,
+  logo-size-ratio,
   ) = {
   if (title == none or title == "") {
     panic("Title is missing. Specify a title in the 'title' attribute of the template.")
@@ -47,7 +52,11 @@
     show-code-snippets: show-code-snippets,
     show-appendix: show-appendix,
     show-abstract: show-abstract,
-    show-header: show-header
+    show-header: show-header,
+    show-title-in-header: show-title-in-header,
+    show-left-logo-in-header: show-left-logo-in-header,
+    show-right-logo-in-header: show-right-logo-in-header,
+    show-header-divider: show-header-divider,
   )
 
   for (key, attribute) in boolean-attributes {
@@ -79,6 +88,39 @@
     }
   }
 
+  if (type(confidentiality-marker) != none) {
+    if (
+      type(confidentiality-marker) != dictionary or
+      "display" not in confidentiality-marker or
+      type(confidentiality-marker.display) != bool
+    ) {
+      panic("Confidentiality marker is invalid. Specify a dictionary in the 'confidentiality-marker' attribute of the template containing a 'display' attribute with a boolean value.")
+    }
+  }
+
+  let length-attributes = (
+    acronym-spacing: acronym-spacing,
+  )
+
+  if ("offset-x" in confidentiality-marker) {
+    length-attributes.insert("offset-x (confidentiality-marker)", confidentiality-marker.offset-x)
+  }
+  if ("offset-y" in confidentiality-marker) {
+    length-attributes.insert("offset-y (confidentiality-marker)", confidentiality-marker.offset-y)
+  }
+  if ("size" in confidentiality-marker) {
+    length-attributes.insert("size (confidentiality-marker)", confidentiality-marker.size)
+  }
+  if ("title-spacing" in confidentiality-marker) {
+    length-attributes.insert("title-spacing (confidentiality-marker)", confidentiality-marker.title-spacing)
+  }
+
+  for (key, attribute) in length-attributes {
+    if (type(attribute) != length) {
+      panic("Attribute '" + key + "' is invalid. Specify a length in the '" + key + "' attribute of the template.")
+    }
+  }
+
   if (authors == none or authors == ()) {
     panic("Author is missing. Specify authors in the 'authors' attribute of the template.")
   }
@@ -91,7 +133,8 @@
 
   if (
     (type-of-thesis != none and type-of-thesis != "") or
-    (type-of-degree != none and type-of-degree != "")
+    (type-of-degree != none and type-of-degree != "") or
+    (confidentiality-marker.display == true)
   ) {
     max-authors -= 2
   }

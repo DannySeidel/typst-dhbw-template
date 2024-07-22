@@ -1,4 +1,4 @@
-#import "@preview/supercharged-dhbw:2.0.2": *
+#import "@preview/supercharged-dhbw:2.1.0": *
 #import "acronyms.typ": acronyms
 
 #show: supercharged-dhbw.with(

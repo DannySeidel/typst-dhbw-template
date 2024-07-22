@@ -72,6 +72,14 @@ This template exports the `supercharged-dhbw` function with the following named 
 
 `city (str)`: City of the author (only needed when `at-university` is `true`)
 
+`confidentiality-marker: (dict)`: Configure the confidentially marker (red or green circle) on the title page (using this option reduces the maximum number of authors by 2 to 4 authors when in the company or 6 authors when at DHBW)
+
+    - display (bool*): Whether the confidentiality marker should be shown, default is `false`
+    - offset-x (length): Horizontal offset of the confidentiality marker, default is `0pt`
+    - offset-y (length): Vertical offset of the confidentiality marker, default is `0pt`
+    - size (length): Size of the confidentiality marker, default is `7em`
+    - title-spacing (length): Adds space below the title to make room for the confidentiality marker, default is `2em`
+
 `confidentiality-statement-content (content)`: Provide a custom confidentiality statement
 
 `date (datetime* | array*)`: Provide a datetime object to display one date (e.g. submission date) or a array containing two datetime objects to display a date range (e.g. start and end date of the project), default is `datetime.today()`
@@ -102,11 +110,19 @@ This template exports the `supercharged-dhbw` function with the following named 
 
 `show-header (bool)`: Whether the header should be shown, default is `true`
 
+`show-header-divider (bool)`: Whether the header divider should be shown, default is `true`
+
 `show-list-of-figures (bool)`: Whether the list of figures should be shown, default is `true`
 
 `show-list-of-tables (bool)`: Whether the list of tables should be shown, default is `true`
 
+`show-left-logo-in-header (bool)`: Whether the left logo should be shown in the header, default is `true`
+
+`show-right-logo-in-header (bool)`: Whether the right logo should be shown in the header, default is `true`
+
 `show-table-of-contents (bool)`: Whether the table of contents should be shown, default is `true`
+
+`show-title-in-header (bool)`: Whether the title should be shown in the header, default is `true`
 
 `supervisor (dict*)`: Name of the supervisor at the university and/or company (e.g. supervisor: (company: "John Doe", university: "Jane Doe"))
 
@@ -174,7 +190,7 @@ To define the plural form of an acronym use a array as value with the first elem
 If you want to change an existing project to use this template, you can add a show rule like this at the top of your file:
 
 ```typst
-#import "@preview/supercharged-dhbw:2.0.2": *
+#import "@preview/supercharged-dhbw:2.1.0": *
 
 #show: supercharged-dhbw.with(
   title: "Exploration of Typst for the Composition of a University Thesis",
