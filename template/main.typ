@@ -1,4 +1,4 @@
-#import "@preview/supercharged-dhbw:2.1.0": *
+#import "@preview/supercharged-dhbw:2.2.0": *
 #import "acronyms.typ": acronyms
 
 #show: supercharged-dhbw.with(
@@ -19,6 +19,7 @@
   supervisor: (company: "John Appleseed"),
   university: "Cooperative State University Baden-Württemberg",
   university-location: "Ravensburg Campus Friedrichshafen",
+  university-short: "DHBW",
   // for more options check the package documentation (https://typst.app/universe/package/supercharged-dhbw)
 )
 
