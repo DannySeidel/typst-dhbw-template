@@ -1,8 +1,8 @@
 [package]
 name = "supercharged-dhbw"
-version = "2.2.0"
+version = "2.3.0"
 entrypoint = "lib.typ"
-authors = ["Danny Seidel <@DannySeidel>"]
+authors = ["Danny Seidel <@DannySeidel>", "Thomas Gingele <b1tc0r3@proton.me>"]
 license = "MIT"
 description = "Unofficial Template for DHBW"
 repository = "https://github.com/DannySeidel/typst-dhbw-template"

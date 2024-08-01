@@ -2,7 +2,7 @@
 
 Unofficial [Typst](https://typst.app/) template for DHBW students.
 
-You can see an example PDF [here](https://github.com/DannySeidel/typst-dhbw-template/blob/main/example.pdf).
+You can see an example PDF [here](/example/example.pdf).
 
 ## Contributing
 

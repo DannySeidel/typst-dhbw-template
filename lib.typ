@@ -98,7 +98,6 @@
 
   // set the document's basic properties
   set document(title: title, author: authors.map(author => author.name))
-  let many-authors = authors.len() > 3
 
   init-acronyms(acronyms)
 
@@ -148,7 +147,6 @@
     left-logo-height,
     logo-left,
     logo-right,
-    many-authors,
     right-logo-height,
     supervisor,
     title,
@@ -206,6 +204,7 @@
   counter(page).update(1)
 
   if (not at-university and show-confidentiality-statement) {
+    pagebreak()
     confidentiality-statement(
       authors,
       title,
@@ -214,18 +213,17 @@
       university-location,
       date,
       language,
-      many-authors,
       date-format
     )
   }
 
   if (show-declaration-of-authorship) {
+    pagebreak()
     declaration-of-authorship(
       authors,
       title,
       date,
       language,
-      many-authors,
       at-university,
       city,
       date-format
