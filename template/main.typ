@@ -1,4 +1,4 @@
-#import "@preview/supercharged-dhbw:2.2.0": *
+#import "@local/supercharged-dhbw:3.0.0": *
 #import "acronyms.typ": acronyms
 
 #show: supercharged-dhbw.with(
@@ -49,9 +49,9 @@ Use the `acr` function to insert acronyms, which looks like this #acr("HTTP").
 
 Create bullet lists or numbered lists.
 
-- These bullet
-- points
-- are colored
+- This
+- is a
+- bullet list
 
 + It also
 + works with
@@ -67,42 +67,50 @@ Create figures or tables like this:
 
 === Tables
 
-#figure(caption: "Table Example", table(
-  columns: (1fr, auto, auto),
-  inset: 10pt,
-  align: horizon,
-  table.header(
-    [], [*Area*], [*Parameters*],
+#figure(
+  caption: "Table Example",
+  table(
+    columns: (1fr, auto, auto),
+    inset: 10pt,
+    align: horizon,
+    table.header(
+      [],
+      [*Area*],
+      [*Parameters*],
+    ),
+
+    text("cylinder.svg"),
+    $ pi h (D^2 - d^2) / 4 $,
+    [
+      $h$: height \
+      $D$: outer radius \
+      $d$: inner radius
+    ],
+
+    text("tetrahedron.svg"), $ sqrt(2) / 12 a^3 $, [$a$: edge length],
   ),
-  text("cylinder.svg"),
-  $ pi h (D^2 - d^2) / 4 $,
-  [
-    $h$: height \
-    $D$: outer radius \
-    $d$: inner radius
-  ],
-  text("tetrahedron.svg"),
-  $ sqrt(2) / 12 a^3 $,
-  [$a$: edge length]
-))<table>
+)<table>
 
 == Code Snippets
 
 Insert code snippets like this:
 
-#figure(caption: "Codeblock Example", sourcecode[```typ
-#show "ArtosFlow": name => box[
-  #box(image(
-    "logo.svg",
-    height: 0.7em,
-  ))
-  #name
-]
+#figure(
+  caption: "Codeblock Example",
+  sourcecode[```ts
+    const ReactComponent = () => {
+      return (
+        <div>
+          <h1>Hello World</h1>
+        </div>
+      );
+    };
 
-This report is embedded in the
-ArtosFlow project. ArtosFlow is a
-project of the Artos Institute.
-```])
+    export default ReactComponent;
+    ```],
+)
+
+#pagebreak()
 
 == References
 
