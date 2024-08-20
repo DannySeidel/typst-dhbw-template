@@ -1,5 +1,7 @@
 #import "@preview/codelst:2.0.1": *
 #import "acronym-lib.typ": init-acronyms, print-acronyms, acr, acrpl, acrs, acrspl, acrl, acrlpl, acrf, acrfpl
+#import "glossary-lib.typ": init-glossary, print-glossary, gls
+#import "locale.typ": TABLE_OF_CONTENTS, LIST_OF_FIGURES, LIST_OF_TABLES, CODE_SNIPPETS, APPENDIX, REFERENCES
 #import "titlepage.typ": *
 #import "confidentiality-statement.typ": *
 #import "declaration-of-authorship.typ": *
@@ -28,12 +30,15 @@
   numbering-alignment: center,
   toc-depth: 3,
   acronym-spacing: 5em,
+  glossary-spacing: 1.5em,
   abstract: none,
   appendix: none,
   acronyms: none,
+  glossary: none,
   header: none,
   confidentiality-statement-content: none,
   declaration-of-authorship-content: none,
+  titlepage-content: none,
   university: none,
   university-location: none,
   university-short: none,
@@ -44,6 +49,7 @@
   bibliography: none,
   bib-style: "ieee",
   heading-numbering: "1.1",
+  math-numbering: "(1)",
   logo-left: image("dhbw.svg"),
   logo-right: none,
   logo-size-ratio: "1:1",
@@ -71,6 +77,7 @@
     numbering-alignment,
     toc-depth,
     acronym-spacing,
+    glossary-spacing,
     abstract,
     appendix,
     acronyms,
@@ -86,6 +93,7 @@
     logo-size-ratio,
     university-short,
     heading-numbering,
+    math-numbering,
   )
 
   // set the document's basic properties
@@ -93,6 +101,7 @@
   let many-authors = authors.len() > 3
 
   init-acronyms(acronyms)
+  init-glossary(glossary)
 
   // define logo size with given ration
   let left-logo-height = 2.4cm // left logo is always 2.4cm high
@@ -113,11 +122,24 @@
   set text(font: body-font, lang: language, 12pt)
   show heading: set text(weight: "semibold", font: heading-font)
 
-  //heading numbering
+  // heading numbering
   set heading(numbering: heading-numbering)
 
+  // math numbering
+  set math.equation(numbering: math-numbering)
+
   // set link style for links that are not acronyms
-  show link: it => if (str(it.dest) not in (acronyms.keys().map(acr => ("acronym-" + acr)))) {
+  let acronym-keys = if (acronyms != none) {
+    acronyms.keys().map(acr => ("acronyms-" + acr))
+  } else {
+    ()
+  }
+  let glossary-keys = if (glossary != none) {
+    glossary.keys().map(gls => ("glossary-" + gls))
+  } else {
+    ()
+  }
+  show link: it => if (str(it.dest) not in (acronym-keys + glossary-keys)) {
     text(fill: blue, it)
   } else {
     it
@@ -130,28 +152,32 @@
   show heading.where(level: 2): it => v(1em) + it + v(0.5em)
   show heading.where(level: 3): it => v(0.5em) + it + v(0.25em)
 
-  titlepage(
-    authors,
-    date,
-    heading-font,
-    language,
-    left-logo-height,
-    logo-left,
-    logo-right,
-    many-authors,
-    right-logo-height,
-    supervisor,
-    title,
-    type-of-degree,
-    type-of-thesis,
-    university,
-    university-location,
-    at-university,
-    date-format,
-    show-confidentiality-statement,
-    confidentiality-marker,
-    university-short,
-  )
+  if (titlepage-content != none) {
+    titlepage-content
+  } else {
+    titlepage(
+      authors,
+      date,
+      heading-font,
+      language,
+      left-logo-height,
+      logo-left,
+      logo-right,
+      many-authors,
+      right-logo-height,
+      supervisor,
+      title,
+      type-of-degree,
+      type-of-thesis,
+      university,
+      university-location,
+      at-university,
+      date-format,
+      show-confidentiality-statement,
+      confidentiality-marker,
+      university-short,
+    )
+  }
 
   // set header properties
   let display-header = if (header != none and ("display" in header)) {
@@ -277,17 +303,21 @@
 
   set par(leading: 0.65em)
 
+  if (show-table-of-contents) {
+    outline(
+      title: TABLE_OF_CONTENTS.at(language),
+      indent: auto,
+      depth: toc-depth,
+    )
+  }
+
   context {
     let elems = query(figure.where(kind: image), here())
     let count = elems.len()
 
     if (show-list-of-figures and count > 0) {
       outline(
-        title: [#heading(level: 3)[#if (language == "de") {
-              [Abbildungsverzeichnis]
-            } else {
-              [List of Figures]
-            }]],
+        title: [#heading(level: 3)[#LIST_OF_FIGURES.at(language)]],
         target: figure.where(kind: image),
       )
     }
@@ -299,11 +329,7 @@
 
     if (show-list-of-tables and count > 0) {
       outline(
-        title: [#heading(level: 3)[#if (language == "de") {
-              [Tabellenverzeichnis]
-            } else {
-              [List of Tables]
-            }]],
+        title: [#heading(level: 3)[#LIST_OF_TABLES.at(language)]],
         target: figure.where(kind: table),
       )
     }
@@ -315,30 +341,18 @@
 
     if (show-code-snippets and count > 0) {
       outline(
-        title: [#heading(level: 3)[#if (language == "de") {
-              [Codeverzeichnis]
-            } else {
-              [Code Snippets]
-            }]],
+        title: [#heading(level: 3)[#CODE_SNIPPETS.at(language)]],
         target: figure.where(kind: raw),
       )
     }
   }
 
-  if (show-table-of-contents) {
-    outline(
-      title: [#if (language == "de") {
-          [Inhaltsverzeichnis]
-        } else {
-          [Table of Contents]
-        }],
-      indent: auto,
-      depth: toc-depth,
-    )
-  }
-
   if (show-acronyms and acronyms != none and acronyms.len() > 0) {
     print-acronyms(language, acronym-spacing)
+  }
+
+  if (glossary != none and glossary.len() > 0) {
+    print-glossary(language, glossary-spacing)
   }
 
   set par(leading: 1em)
@@ -377,22 +391,14 @@
   // Display bibliography.
   if bibliography != none {
     set std-bibliography(
-      title: [#if (language == "de") {
-          [Literatur]
-        } else {
-          [References]
-        }],
+      title: REFERENCES.at(language),
       style: bib-style,
     )
     bibliography
   }
 
   if (show-appendix and appendix != none) {
-    heading(level: 1, numbering: none)[#if (language == "de") {
-        [Anhang]
-      } else {
-        [Appendix]
-      }]
+    heading(level: 1, numbering: none)[#APPENDIX.at(language)]
     appendix
   }
 

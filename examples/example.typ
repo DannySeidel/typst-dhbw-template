@@ -1,4 +1,4 @@
-#import "@preview/supercharged-dhbw:3.0.0": *
+#import "@preview/supercharged-dhbw:3.1.0": *
 
 #let acronyms = (
   "VIP": "Very important person",

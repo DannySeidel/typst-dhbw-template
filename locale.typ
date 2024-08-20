@@ -62,7 +62,7 @@
   "en": "contains internal respective confidential data of",
 )
 #let CONFIDENTIALITY_STATEMENT_SECTION_C = (
-  "de": ", ist deshalb mit einem Sperrvermerk versehen und wird ausschließlich zu Prüfungszwecken am Studiengang",
+  "de": ", ist deshalb mit einem Sperrvermerk versehen und wird ausschließlich zu Prüfungszwecken im Studiengang",
   "en": ". It is intended solely for inspection by the assigned examiner, the head of the ",
 )
 #let CONFIDENTIALITY_STATEMENT_SECTION_D = (
@@ -101,4 +101,44 @@ The content of this thesis may not be made available, either in its entirety or 
 #let BY = (
   "de": "von",
   "en": "by",
+)
+
+#let TABLE_OF_CONTENTS = (
+  "de": "Inhaltsverzeichnis",
+  "en": "Table of Contents",
+)
+
+#let LIST_OF_FIGURES = (
+  "de": "Abbildungsverzeichnis",
+  "en": "List of Figures",
+)
+
+#let LIST_OF_TABLES = (
+  "de": "Tabellenverzeichnis",
+  "en": "List of Tables",
+)
+
+#let CODE_SNIPPETS = (
+  "de": "Codeverzeichnis",
+  "en": "Code Snippets",
+)
+
+#let ACRONYMS = (
+  "de": "Abkürzungsverzeichnis",
+  "en": "List of Acronyms",
+)
+
+#let GLOSSARY = (
+  "de": "Glossar",
+  "en": "Glossary",
+)
+
+#let REFERENCES = (
+  "de": "Literatur",
+  "en": "References",
+)
+
+#let APPENDIX = (
+  "de": "Anhang",
+  "en": "Appendix",
 )

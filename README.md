@@ -108,6 +108,10 @@ This template exports the `supercharged-dhbw` function with the following named 
 
 `declaration-of-authorship-content (content)`: Provide a custom declaration of authorship
 
+`glossary (dictionary)`: Pass a dictionary containing the glossary terms and their definitions (See the example in the `glossary.typ` file)
+
+`glossary-spacing (length)`: Spacing between the glossary term and its definition (check the [Typst documentation](https://typst.app/docs/reference/layout/length/) for examples on how to provide parameters of type length), default is `1.5em`
+
 `header (dictionary)`: Configure the header of the document
 
 - display (bool): Whether the header should be shown, default is `true`
@@ -126,6 +130,8 @@ This template exports the `supercharged-dhbw` function with the following named 
 `logo-right (content)`: Path to the logo on the right side of the title page (usage: image("path/to/image.png")), default is `no logo`
 
 `logo-size-ratio (str)`: Ratio between the right logo and the left logo height (left-logo:right-logo), default is `"1:1"`
+
+`math-numbering (str)`: Numbering style of the math equations, set to `none` to turn off equation numbering, default is `"(1)"` (for more information on possible numbering formats check the [Typst documentation](https://typst.app/docs/reference/model/numbering))
 
 `numbering-alignment (alignment)`: Alignment of the page numbering (for possible options check the [Typst documentation](https://typst.app/docs/reference/layout/alignment/)), default is `center`
 
@@ -152,6 +158,8 @@ This template exports the `supercharged-dhbw` function with the following named 
 - company (str): Name of the supervisor at the company (note while the argument is optional at least one of the two arguments must be provided)
 - university (str): Name of the supervisor at the university (note while the argument is optional at least one of the two arguments must be provided)
 
+`titlepage-content (content)`: Provide a custom title page
+
 `toc-depth (int)`: Depth of the table of contents, default is `3`
 
 `type-of-thesis (str)`: Type of the thesis, default is `none` (using this option reduces the maximum number of authors by 2 to 4 authors when in the company or 6 authors when at DHBW)
@@ -168,15 +176,18 @@ Behind the arguments the type of the value is given in parentheses. All argument
 
 ## Acronyms
 
+This template provides functions to reference acronyms in the text. To use these functions, you need to define the acronyms in the `acronyms` attribute of the template.
+The acronyms referenced with the functions below will be linked to their definition in the list of acronyms.
+
 ### Functions
 
 This template provides the following functions to reference acronyms:
 
-`acr`: Reference an acronym in the text
+`acr`: Reference an acronym in the text (e.g. `acr("API")` -> `Application Programming Interface (API)` or `API`)
 
-`acrpl`: Reference an acronym in the text in plural form
+`acrpl`: Reference an acronym in the text in plural form (e.g. `acrpl("API")` -> `Application Programming Interfaces (API)` or `APIs`)
 
-`acrs`: Reference an acronym in the text in short form (e.g. `acr("API")` -> `API`)
+`acrs`: Reference an acronym in the text in short form (e.g. `acrs("API")` -> `API`)
 
 `acrspl`: Reference an acronym in the text in short form in plural form (e.g. `acrpl("API")` -> `APIs`)
 
@@ -190,7 +201,8 @@ This template provides the following functions to reference acronyms:
 
 ### Definition
 
-To define acronyms use a dictionary and pass it to the acronyms attribute of the template. The dictionary should contain the acronyms as keys and their long forms as values.
+To define acronyms use a dictionary and pass it to the acronyms attribute of the template.
+The dictionary should contain the acronyms as keys and their long forms as values.
 
 ```typst
 #let acronyms = (
@@ -200,12 +212,36 @@ To define acronyms use a dictionary and pass it to the acronyms attribute of the
 )
 ```
 
-To define the plural form of an acronym use a array as value with the first element being the singular form and the second element being the plural form. If you don't define the plural form, the template will automatically add an "s" to the singular form.
+To define the plural form of an acronym use a array as value with the first element being the singular form and the second element being the plural form.
+If you don't define the plural form, the template will automatically add an "s" to the singular form.
 
 ```typst
 #let acronyms = (
   API: ("Application Programming Interface", "Application Programming Interfaces"),
   HTTP: ("Hypertext Transfer Protocol", "Hypertext Transfer Protocols"),
   REST: ("Representational State Transfer", "Representational State Transfers"),
+)
+```
+
+## Glossary
+
+Similar to the acronyms, this template provides a function to reference glossary terms in the text. To use the function, you need to define the glossary terms in the `glossary` attribute of the template.
+The glossary terms referenced with the function below will be linked to their definition in the list of glossary terms.
+
+### Reference
+
+`gls`: Reference a glossary term in the text (e.g. `gls("Vulnerability")` -> link to the definition of "Vulnerability" in the glossary)
+
+### Definition
+
+The definition works analogously to the acronyms.
+Define the glossary terms in a dictionary and pass it to the glossary attribute of the template.
+The dictionary should contain the glossary terms as keys and their definitions as values.
+
+```typst
+#let glossary = (
+  Vulnerability: "A Vulnerability is a flaw in a computer system that weakens the overall security of the system.",
+  Patch: "A patch is data that is intended to be used to modify an existing software resource such as a program or a file, often to fix bugs and security vulnerabilities.",
+  Exploit: "An exploit is a method or piece of code that takes advantage of vulnerabilities in software, applications, networks, operating systems, or hardware, typically for malicious purposes.",
 )
 ```

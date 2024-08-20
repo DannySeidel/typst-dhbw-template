@@ -1,5 +1,6 @@
-#import "@local/supercharged-dhbw:3.0.0": *
+#import "@preview/supercharged-dhbw:3.1.0": *
 #import "acronyms.typ": acronyms
+#import "glossary.typ": glossary
 
 #show: supercharged-dhbw.with(
   title: "Exploration of Typst for the Composition of a University Thesis",
@@ -15,6 +16,7 @@
   at-university: false, // if true the company name on the title page and the confidentiality statement are hidden
   bibliography: bibliography("sources.bib"),
   date: datetime.today(),
+  glossary: glossary, // displays the glossary terms defined in the glossary dictionary
   language: "en", // en, de
   supervisor: (company: "John Appleseed"),
   university: "Cooperative State University Baden-Württemberg",
@@ -45,6 +47,12 @@ Use the `acr` function to insert acronyms, which looks like this #acr("HTTP").
 
 #acrs("REST") is an architectural style for networked applications.
 
+== Glossary
+
+Use the `gls` function to insert glossary terms, which looks like this:
+
+A #gls("Vulnerability") is a weakness in a system that can be exploited.
+
 == Lists
 
 Create bullet lists or numbered lists.
@@ -70,7 +78,7 @@ Create figures or tables like this:
 #figure(
   caption: "Table Example",
   table(
-    columns: (1fr, auto, auto),
+    columns: (1fr, 50%, auto),
     inset: 10pt,
     align: horizon,
     table.header(

@@ -19,6 +19,7 @@
   numbering-alignment,
   toc-depth,
   acronym-spacing,
+  glossary-spacing,
   abstract,
   appendix,
   acronyms,
@@ -34,6 +35,7 @@
   logo-size-ratio,
   university-short,
   heading-numbering,
+  math-numbering,
 ) = {
   if (title == none or title == "") {
     panic("Title is missing. Specify a title in the 'title' attribute of the template.")
@@ -79,6 +81,8 @@
     type-of-degree: type-of-degree,
     bib-style: bib-style,
     heading-numbering: heading-numbering,
+    math-numbering: math-numbering,
+
   )
 
   for (key, attribute) in optional-string-attributes {
@@ -97,6 +101,7 @@
 
   let length-attributes = (
     acronym-spacing: acronym-spacing,
+    glossary-spacing: glossary-spacing,
   )
 
   if ("offset-x" in confidentiality-marker) {
