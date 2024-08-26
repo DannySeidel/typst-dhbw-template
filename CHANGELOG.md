@@ -1,11 +1,16 @@
 # Supercharged-DHBW Changelog
 
+## [v3.1.1] - 2024-08-26
+
+- Update declaration of authorship text to match the new DHBW requirements
+
 ## [v3.1.0] - 2024-08-20
 
 - Fix typo in readme and improve contents
 - Add attribute `titlepage-content` to create a custom titlepage
 - Add attribute `math-numbering` to change the numbering style of math equations
 - Fix typo in german confidentiality statement
+- Reorder outlines and abstract
 - Add glossary support
 - Improve code and language handling
 - Fix error when no acronyms are provided
