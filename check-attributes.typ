@@ -13,7 +13,6 @@
   show-list-of-figures,
   show-list-of-tables,
   show-code-snippets,
-  show-appendix,
   show-abstract,
   header,
   numbering-alignment,
@@ -36,6 +35,7 @@
   university-short,
   heading-numbering,
   math-numbering,
+  ignored-link-label-keys-for-highlighting,
 ) = {
   if (title == none or title == "") {
     panic("Title is missing. Specify a title in the 'title' attribute of the template.")
@@ -54,7 +54,6 @@
     show-list-of-figures: show-list-of-figures,
     show-list-of-tables: show-list-of-tables,
     show-code-snippets: show-code-snippets,
-    show-appendix: show-appendix,
     show-abstract: show-abstract,
   )
 
@@ -82,7 +81,6 @@
     bib-style: bib-style,
     heading-numbering: heading-numbering,
     math-numbering: math-numbering,
-
   )
 
   for (key, attribute) in optional-string-attributes {
@@ -232,5 +230,19 @@
     ) and ("university" not in supervisor or supervisor.university == none or supervisor.university == "")
   ) {
     panic("Supervisor(s) is/are invalid. Specify a supervisor either for the company and/or the university in the 'supervisor' attribute of the template.")
+  }
+
+  let string-array-attributes = (
+    ignored-link-label-keys-for-highlighting: ignored-link-label-keys-for-highlighting,
+  )
+
+  for (key, attribute) in string-array-attributes {
+    if (type(attribute) != array) {
+      panic("Attribute '" + key + "' is invalid. Specify an array of strings in the '" + key + "' attribute of the template.")
+    } else if (attribute.len() > 0) {
+      if (type(attribute.at(0)) != str) {
+        panic("Attribute '" + key + "' is invalid. Specify an array of strings in the '" + key + "' attribute of the template.")
+      }
+    }
   }
 }

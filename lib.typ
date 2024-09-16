@@ -25,7 +25,6 @@
   show-list-of-figures: true,
   show-list-of-tables: true,
   show-code-snippets: true,
-  show-appendix: false,
   show-abstract: true,
   numbering-alignment: center,
   toc-depth: 3,
@@ -53,6 +52,7 @@
   logo-left: image("dhbw.svg"),
   logo-right: none,
   logo-size-ratio: "1:1",
+  ignored-link-label-keys-for-highlighting: (),
   body,
 ) = {
   // check required attributes
@@ -71,7 +71,6 @@
     show-list-of-figures,
     show-list-of-tables,
     show-code-snippets,
-    show-appendix,
     show-abstract,
     header,
     numbering-alignment,
@@ -94,6 +93,7 @@
     university-short,
     heading-numbering,
     math-numbering,
+    ignored-link-label-keys-for-highlighting,
   )
 
   // set the document's basic properties
@@ -139,7 +139,7 @@
   } else {
     ()
   }
-  show link: it => if (str(it.dest) not in (acronym-keys + glossary-keys)) {
+  show link: it => if (str(it.dest) not in (acronym-keys + glossary-keys + ignored-link-label-keys-for-highlighting)) {
     text(fill: blue, it)
   } else {
     it
@@ -397,7 +397,7 @@
     bibliography
   }
 
-  if (show-appendix and appendix != none) {
+  if (appendix != none) {
     heading(level: 1, numbering: none)[#APPENDIX.at(language)]
     appendix
   }
