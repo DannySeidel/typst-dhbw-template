@@ -6,6 +6,7 @@
 #import "confidentiality-statement.typ": *
 #import "declaration-of-authorship.typ": *
 #import "check-attributes.typ": *
+#import "@preview/hydra:0.5.1": hydra
 
 // Workaround for the lack of an `std` scope.
 #let std-bibliography = bibliography
@@ -218,7 +219,7 @@
 
   set page(
     margin: (top: 8em, bottom: 8em),
-    header: {
+    header: context {
       if (display-header) {
         if (header-content != none) {
           header.content
@@ -228,7 +229,13 @@
             align: (left, right),
             gutter: 2em,
             if (show-header-title) {
-              emph(align(center + horizon, text(size: 10pt, title)))
+              align(left + bottom) [
+                #set text(weight: semibold)
+                #let headings = query(heading.where(level: 1))
+                #if headings.len() > 0 and not headings.any(it => it.location().page() == here().page() - 0) and here().page() > 1{
+                hydra(1, skip-starting: true)
+            }
+            ],
             },
             stack(
               dir: ltr,
@@ -317,7 +324,7 @@
 
     if (show-list-of-figures and count > 0) {
       outline(
-        title: [#heading(level: 3)[#LIST_OF_FIGURES.at(language)]],
+        title: [#heading(level: 4)[#LIST_OF_FIGURES.at(language)]],
         target: figure.where(kind: image),
       )
     }
@@ -329,7 +336,7 @@
 
     if (show-list-of-tables and count > 0) {
       outline(
-        title: [#heading(level: 3)[#LIST_OF_TABLES.at(language)]],
+        title: [#heading(level: 4)[#LIST_OF_TABLES.at(language)]],
         target: figure.where(kind: table),
       )
     }
@@ -341,7 +348,7 @@
 
     if (show-code-snippets and count > 0) {
       outline(
-        title: [#heading(level: 3)[#CODE_SNIPPETS.at(language)]],
+        title: [#heading(level: 4)[#CODE_SNIPPETS.at(language)]],
         target: figure.where(kind: raw),
       )
     }
