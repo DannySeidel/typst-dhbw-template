@@ -113,7 +113,7 @@
       }
     }
 
-    let acr-list = acronym-keys.sorted()
+    let acr-list = acronym-keys.sorted(key: entry => lower(entry))
 
     for acr in acr-list {
       grid(
