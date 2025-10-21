@@ -28,13 +28,13 @@
 
     if is-in-dict("acronyms", acros, acr) {
       let defs = acronyms.at(acr)
-      if type(defs) == "string" {
+      if type(defs) == str {
         if plural {
           display("acronyms", acros, acr, defs + "s", link: link)
         } else {
           display("acronyms", acros, acr, defs, link: link)
         }
-      } else if type(defs) == "array" {
+      } else if type(defs) == array {
         if defs.len() == 0 {
           panic("No definitions found for acronym " + acr + ". Make sure it is defined in the dictionary passed to #init-acronyms(dict)")
         }
