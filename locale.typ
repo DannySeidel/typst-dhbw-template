@@ -13,6 +13,11 @@
   "en": "at the ",
 )
 
+#let TITLEPAGE_TIME = (
+  "de": "Bearbeitungszeitraum",
+  "en": "Time of Project"
+)
+
 #let TITLEPAGE_STUDENT_ID = (
   "de": "Matrikelnummer, Kurs:",
   "en": "Student ID, Course:",
@@ -33,11 +38,35 @@
   "en": "Supervisor at ",
 )
 
+#let TITLEPAGE_SIGNATURE = (
+  "de": "Unterschrift",
+  "en": "Signature",
+)
+
+#let DECLARATION_OF_AI_USAGE_TITLE = (
+  "de": "Erklärung zur Nutzung von KI-Tools",
+  "en": "Declaration on the Use of AI Tools",
+)
+
+#let DECLARATION_OF_AI_USAGE_TEXT = (
+  "de": "Im Rahmen der praktischen Umsetzung des Projektes, der Literaturrecherche und -verwaltung, der Zusammenfassung und Übersetzung wissenschaftlicher Artikel kamen verschiedene KI- und Software-Tools zum Einsatz. Diese Tools unterstützten diese Arbeit lediglich und ersetzten in keinem Maße die Eigenleistung des Verfassers. Sämtliche Quellen und Informationen wurden stets kritisch hinterfragt.",
+  "en": "Various AI and software tools were used during the practical implementation of the project, the literature research and management, and the summarization and translation of scientific articles. These tools merely supported this work and did not replace the author's own contribution in any way. All sources and information were consistently critically reviewed.",
+)
+
+#let DECLARATION_OF_AI_USAGE_TOOLS = (
+  "de": "Verwendete Tools:",
+  "en": "Tools used:",
+)
+
+#let DECLARATION_OF_AI_USAGE_NONE = (
+  "de": "Im Rahmen dieser Arbeit wurden keine KI-Tools verwendet.",
+  "en": "No AI tools were used in the course of this work.",
+)
+
 #let DECLARATION_OF_AUTHORSHIP_TITLE = (
   "de": "Selbstständigkeitserklärung",
   "en": "Declaration of Authorship",
 )
-
 #let DECLARATION_OF_AUTHORSHIP_SECTION_A_SINGLE = "Gemäß Ziffer 1.1.13 der Anlage 1 zu §§ 3, 4 und 5 der Studien- und Prüfungsordnung für die Bachelorstudiengänge im Studienbereich Technik der Dualen Hochschule Baden- Württemberg vom 29.09.2017. Ich versichere hiermit, dass ich meine Arbeit mit dem Thema:"
 
 #let DECLARATION_OF_AUTHORSHIP_SECTION_A_PLURAL = "Gemäß Ziffer 1.1.13 der Anlage 1 zu §§ 3, 4 und 5 der Studien- und Prüfungsordnung für die Bachelorstudiengänge im Studienbereich Technik der Dualen Hochschule Baden- Württemberg vom 29.09.2017. Wir versichern hiermit, dass wir unsere Arbeit mit dem Thema:"

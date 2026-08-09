@@ -106,7 +106,11 @@ This template exports the `supercharged-dhbw` function with the following named 
 
 `date-format (str)`: Format of the displayed dates, default is `"[day].[month].[year]"` (for more information on possible formats check the [Typst documentation](https://typst.app/docs/reference/foundations/datetime/#format))
 
+`project-timeframe (content)`: Optional project period displayed on the title page, for example `project-timeframe: [1. Jan 2025 -- 1. Aug 2025]`
+
 `declaration-of-authorship-content (content)`: Provide a custom declaration of authorship
+
+`declaration-of-ai-usage-content (content)`: Provide custom content for the AI-tool usage declaration. The declaration is shown only when `ai-tools` contains at least one item. If custom content is provided, it replaces the default declaration text while the declaration title is retained.
 
 `glossary (dictionary)`: Pass a dictionary containing the glossary terms and their definitions (See the example in the `glossary.typ` file)
 
@@ -120,6 +124,10 @@ This template exports the `supercharged-dhbw` function with the following named 
 - show-right-logo (bool): Whether the right logo should be shown in the header, default is `true`
 - show-divider (bool): Whether the header divider should be shown, default is `true`
 - content (content): Content for a custom header, it is recommended that you pass a variable containing the content or a function that returns the content
+
+`header-logo-height (length)`: Height of the header logos, configurable independently from the title-page logos
+
+`header-logo-size-ratio (str)`: Ratio between the left and right header logos, default is `"1:1"`
 
 `heading-numering (str)`: Numbering style of the headings, default is `"1.1"` (for more information on possible numbering formats check the [Typst documentation](https://typst.app/docs/reference/model/numbering))
 
@@ -153,6 +161,22 @@ This template exports the `supercharged-dhbw` function with the following named 
 
 `show-declaration-of-authorship (bool)`: Whether the declaration of authorship should be shown, default is `true`
 
+`ai-tools (array)`: AI or software tools used in the thesis. The AI-tool usage declaration is shown automatically when this array contains at least one item and is omitted when it is empty. Entries can be plain strings or `(name, url)` pairs, which are rendered as linked tool names.
+
+The AI-tool usage declaration can be configured as follows:
+
+```typst
+#show: supercharged-dhbw.with(
+  ai-tools: (
+    ("ChatGPT", "https://chatgpt.com/"),
+    ("DeepL", "https://www.deepl.com/translator"),
+    "ComfyUI",
+  ),
+)
+```
+
+Tools may be specified as plain strings or as `(name, url)` pairs. URL pairs are rendered as links in the declaration. Use `declaration-of-ai-usage-content` to replace the default declaration text.
+
 `show-list-of-figures (bool)`: Whether the list of figures should be shown, default is `true`
 
 `show-list-of-tables (bool)`: Whether the list of tables should be shown, default is `true`
@@ -165,6 +189,8 @@ This template exports the `supercharged-dhbw` function with the following named 
 - university (str): Name of the supervisor at the university (note while the argument is optional at least one of the two arguments must be provided)
 
 `titlepage-content (content)`: Provide a custom title page
+
+The title page includes a signature line for the author. When `project-timeframe` is provided, the project period is displayed on the title page as well.
 
 `toc-depth (int)`: Depth of the table of contents, default is `3`
 

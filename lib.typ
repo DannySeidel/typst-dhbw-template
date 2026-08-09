@@ -1,10 +1,11 @@
-#import "@preview/codelst:2.0.1": *
+#import "@preview/codelst:2.0.2": *
 #import "acronym-lib.typ": init-acronyms, print-acronyms, acr, acrpl, acrs, acrspl, acrl, acrlpl, acrf, acrfpl
 #import "glossary-lib.typ": init-glossary, print-glossary, gls
 #import "locale.typ": TABLE_OF_CONTENTS, LIST_OF_FIGURES, LIST_OF_TABLES, CODE_SNIPPETS, APPENDIX, REFERENCES
 #import "titlepage.typ": *
 #import "confidentiality-statement.typ": *
 #import "declaration-of-authorship.typ": *
+#import "declaration-of-ai-usage.typ": *
 #import "check-attributes.typ": *
 
 // Workaround for the lack of an `std` scope.
@@ -47,6 +48,7 @@
   type-of-degree: none,
   show-confidentiality-statement: true,
   show-declaration-of-authorship: true,
+  ai-tools: (),
   show-table-of-contents: true,
   show-acronyms: true,
   show-list-of-figures: true,
@@ -64,6 +66,7 @@
   header: none,
   confidentiality-statement-content: none,
   declaration-of-authorship-content: none,
+  declaration-of-ai-usage-content: none,
   titlepage-content: none,
   university: none,
   university-location: none,
@@ -80,7 +83,10 @@
   logo-left: image("dhbw.svg"),
   logo-right: none,
   logo-size-ratio: "1:1",
+  header-logo-height: 1.2cm,
+  header-logo-size-ratio: none,
   ignored-link-label-keys-for-highlighting: (),
+  project-timeframe: none,
   body,
 ) = {
   // check required attributes
@@ -94,6 +100,8 @@
     type-of-degree,
     show-confidentiality-statement,
     show-declaration-of-authorship,
+    ai-tools,
+    declaration-of-ai-usage-content,
     show-table-of-contents,
     show-acronyms,
     show-list-of-figures,
@@ -118,6 +126,8 @@
     logo-left,
     logo-right,
     logo-size-ratio,
+    header-logo-height,
+    header-logo-size-ratio,
     university-short,
     heading-numbering,
     math-numbering,
@@ -138,6 +148,20 @@
   let logo-ratio = logo-size-ratio.split(":")
   if (logo-ratio.len() == 2) {
     right-logo-height = right-logo-height * (float(logo-ratio.at(1)) / float(logo-ratio.at(0)))
+  }
+
+  // define header logo size independently from the titlepage logo size
+  // (defaults to the same ratio as the titlepage so existing documents keep looking the same)
+  let header-left-logo-height = header-logo-height
+  let header-right-logo-height = header-logo-height
+  let effective-header-logo-size-ratio = if (header-logo-size-ratio != none) {
+    header-logo-size-ratio
+  } else {
+    logo-size-ratio
+  }
+  let header-logo-ratio = effective-header-logo-size-ratio.split(":")
+  if (header-logo-ratio.len() == 2) {
+    header-right-logo-height = header-right-logo-height * (float(header-logo-ratio.at(1)) / float(header-logo-ratio.at(0)))
   }
 
   // save heading and body font families in variables
@@ -205,6 +229,7 @@
       show-confidentiality-statement,
       confidentiality-marker,
       university-short,
+      project-timeframe,
     )
   }
 
@@ -294,12 +319,16 @@
                 dir: ltr,
                 spacing: 1em,
                 if (show-header-left-logo and logo-left != none) {
-                  set image(height: left-logo-height / 2)
-                  logo-left
+                  align(horizon, {
+                    set image(height: header-left-logo-height)
+                    logo-left
+                  })
                 },
                 if (show-header-right-logo and logo-right != none) {
-                  set image(height: right-logo-height / 2)
-                  logo-right
+                  align(horizon, {
+                    set image(height: header-right-logo-height)
+                    logo-right
+                  })
                 },
               ),
             )
@@ -365,6 +394,15 @@
       at-university,
       city,
       date-format,
+    )
+  }
+
+  if (ai-tools.len() > 0) {
+    pagebreak()
+    declaration-of-ai-usage(
+      ai-tools,
+      declaration-of-ai-usage-content,
+      language,
     )
   }
 

@@ -8,6 +8,8 @@
   type-of-degree,
   show-confidentiality-statement,
   show-declaration-of-authorship,
+  ai-tools,
+  declaration-of-ai-usage-content,
   show-table-of-contents,
   show-acronyms,
   show-list-of-figures,
@@ -32,6 +34,8 @@
   logo-left,
   logo-right,
   logo-size-ratio,
+  header-logo-height,
+  header-logo-size-ratio,
   university-short,
   heading-numbering,
   math-numbering,
@@ -235,6 +239,30 @@
 
   if (ratio.len() != 2) {
     panic("Invalid ratio. Specify a ratio in the format 'x:y' in the 'logo-size-ratio' attribute of the template.")
+  }
+
+  if (type(header-logo-height) != length) {
+    panic("Header logo height is invalid. Specify a length in the 'header-logo-height' attribute of the template.")
+  }
+
+  if (header-logo-size-ratio != none) {
+    if (type(header-logo-size-ratio) != str or header-logo-size-ratio.len() == 0) {
+      panic("Header logo size ratio is invalid. Specify a ratio in the 'header-logo-size-ratio' attribute of the template.")
+    }
+
+    let header-ratio = header-logo-size-ratio.split(":")
+
+    if (header-ratio.len() != 2) {
+      panic("Invalid ratio. Specify a ratio in the format 'x:y' in the 'header-logo-size-ratio' attribute of the template.")
+    }
+  }
+
+  if (ai-tools != none and type(ai-tools) != array) {
+    panic("Attribute 'ai-tools' is invalid. Specify an array of strings or (name, url) pairs in the 'ai-tools' attribute of the template.")
+  }
+
+  if (declaration-of-ai-usage-content != none and type(declaration-of-ai-usage-content) != content) {
+    panic("Attribute 'declaration-of-ai-usage-content' is invalid. Specify content in the 'declaration-of-ai-usage-content' attribute of the template.")
   }
 
   if (type(bibliography) != content and bibliography != none) {

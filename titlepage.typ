@@ -21,6 +21,7 @@
   show-confidentiality-statement,
   confidentiality-marker,
   university-short,
+  project-timeframe,
 ) = {
   if (many-authors) {
     v(-1.5em)
@@ -202,96 +203,113 @@
   v(1fr)
 
   // author information
+  // Build the list of label/value cells dynamically so that rows for
+  // optional information (e.g. only a university supervisor) don't leave
+  // behind an empty row that still consumes `row-gutter` space.
+  let author-info-cells = ()
+
+  // project time frame
+  if (project-timeframe != none) {
+    author-info-cells.push(text(weight: "semibold", TITLEPAGE_TIME.at(language)) + [:])
+    author-info-cells.push(text(project-timeframe))
+  }
+
+  // students
+  author-info-cells.push(text(weight: "semibold", TITLEPAGE_STUDENT_ID.at(language)))
+  author-info-cells.push(stack(
+    dir: ttb,
+    for author in authors {
+      text([#author.student-id, #author.course])
+      linebreak()
+    },
+  ))
+
+  // company
+  if (not at-university) {
+    author-info-cells.push(text(weight: "semibold", TITLEPAGE_COMPANY.at(language)))
+    author-info-cells.push(stack(
+      dir: ttb,
+      for author in authors {
+        let company-address = ""
+
+        // company name
+        if (
+          "name" in author.company and
+          author.company.name != none and
+          author.company.name != ""
+          ) {
+          company-address += author.company.name
+        } else {
+          panic("Author '" + author.name + "' is missing a company name. Add the 'name' attribute to the company object.")
+        }
+
+        // company address (optional)
+        if (
+          "post-code" in author.company and
+          author.company.post-code != none and
+          author.company.post-code != ""
+          ) {
+          company-address += text([, #author.company.post-code])
+        }
+
+        // company city
+        if (
+          "city" in author.company and
+          author.company.city != none and
+          author.company.city != ""
+          ) {
+          company-address += text([, #author.company.city])
+        } else {
+          panic("Author '" + author.name + "' is missing the city of the company. Add the 'city' attribute to the company object.")
+        }
+
+        // company country (optional)
+        if (
+          "country" in author.company and
+          author.company.country != none and
+          author.company.country != ""
+        ) {
+          company-address += text([, #author.company.country])
+        }
+
+        company-address
+        linebreak()
+      },
+    ))
+  }
+
+  // company supervisor
+  if ("company" in supervisor) {
+    author-info-cells.push(text(weight: "semibold", TITLEPAGE_COMPANY_SUPERVISOR.at(language)))
+    author-info-cells.push(if (type(supervisor.company) == str) {
+      text(supervisor.company)
+    })
+  }
+
+  // university supervisor
+  if ("university" in supervisor) {
+    author-info-cells.push(text(
+      weight: "semibold",
+      TITLEPAGE_SUPERVISOR.at(language) +
+      university-short +
+      [:]
+    ))
+    author-info-cells.push(if (type(supervisor.university) == str) {
+      text(supervisor.university)
+    })
+  }
+
+  // signature
+  author-info-cells.push(text(
+    weight: "semibold",
+    TITLEPAGE_SIGNATURE.at(language) + [:]
+  ))
+  author-info-cells.push(align(bottom)[#line(length: 8em)])
+
   grid(
     columns: (auto, auto),
     row-gutter: 11pt,
     column-gutter: 2.5em,
-
-    // students
-    text(weight: "semibold", TITLEPAGE_STUDENT_ID.at(language)),
-    stack(
-      dir: ttb,
-      for author in authors {
-        text([#author.student-id, #author.course])
-        linebreak()
-      }
-    ),
-
-    // company
-    if (not at-university) {
-      text(weight: "semibold", TITLEPAGE_COMPANY.at(language))
-    },
-    if (not at-university) {
-      stack(
-        dir: ttb,
-        for author in authors {
-          let company-address = ""
-
-          // company name
-          if (
-            "name" in author.company and
-            author.company.name != none and
-            author.company.name != ""
-            ) {
-            company-address+= author.company.name
-          } else {
-            panic("Author '" + author.name + "' is missing a company name. Add the 'name' attribute to the company object.")
-          }
-
-          // company address (optional)
-          if (
-            "post-code" in author.company and
-            author.company.post-code != none and
-            author.company.post-code != ""
-            ) {
-            company-address+= text([, #author.company.post-code])
-          }
-
-          // company city
-          if (
-            "city" in author.company and
-            author.company.city != none and
-            author.company.city != ""
-            ) {
-            company-address+= text([, #author.company.city])
-          } else {
-            panic("Author '" + author.name + "' is missing the city of the company. Add the 'city' attribute to the company object.")
-          }
-
-          // company country (optional)
-          if (
-            "country" in author.company and
-            author.company.country != none and
-            author.company.country != ""
-          ) {
-            company-address+= text([, #author.company.country])
-          }
-
-          company-address
-          linebreak()
-        }
-      )
-    },
-
-    // company supervisor
-    if ("company" in supervisor) {
-      text(weight: "semibold", TITLEPAGE_COMPANY_SUPERVISOR.at(language))
-    },
-    if ("company" in supervisor and type(supervisor.company) == str) {
-      text(supervisor.company)
-    },
-
-    // university supervisor
-    if ("university" in supervisor) {
-      text(
-        weight: "semibold",
-        TITLEPAGE_SUPERVISOR.at(language) +
-        university-short +
-        [:]
-      )
-    },
-    if ("university" in supervisor and type(supervisor.university) == str) {
-      text(supervisor.university)
-    }
+    ..author-info-cells
   )
 }

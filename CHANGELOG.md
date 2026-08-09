@@ -1,5 +1,25 @@
 # Supercharged-DHBW Changelog
 
+## [v3.5.0] - 2026-08-09
+
+### Fixed
+
+- Fix `acrl` failing with `cannot add string and type` when acronym definitions are strings.
+- Fix compatibility with Typst 0.14 by replacing deprecated type/string comparisons with comparisons against `str` and `array`.
+- Remove unconditional return statements that caused Typst warnings in dictionary validation.
+- Fix the additional vertical gap on the title page when only a university supervisor is provided. Optional author-information rows are now generated dynamically, preventing empty conditional grid rows from consuming gutter space.
+
+### Added
+
+- Add case-insensitive sorting for the acronym list, so mixed-case acronyms such as `SaaS` are sorted consistently with uppercase acronyms.
+- Add the `project-timeframe` attribute for displaying the project period on the title page.
+- Add a signature label and signature line to the title page.
+- Add independent header-logo sizing through the `header-logo-height` and `header-logo-size-ratio` attributes, allowing header logos to be sized separately from title-page logos.
+- Vertically align differently sized header logos with `align(horizon, ...)`.
+- Add an optional AI-tool usage declaration page for documenting the use of AI and software tools.
+- Add the `ai-tools` attribute for listing plain tool names or tool name/URL pairs.
+- Add the `declaration-of-ai-usage-content` attribute for providing custom AI-usage declaration content.
+
 ## [v3.4.1] - 2025-01-07
 
 - Fix error that page numbering style is not applied to the table of contents
